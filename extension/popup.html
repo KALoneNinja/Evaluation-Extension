@@ -28,17 +28,56 @@
               margin: 0.5%;
               margin-top:-100%;
           }
+          .tab-contents{
+            display: none;
+          }
+          .tab-contents.active{
+              display: block;
+          }
+          #search-for-storage{
+              display:none;
+          }
       </style>
     </head>
     <body>
         <div class="tabs">
-            <button class="tablinks" onClick="switchTab('Resources')">Resources</button>
-            <button class="tablinks" onClick="switchTab('Settings')">Settings</button>
-            <button class="tablinks" onClick="switchTab('Previous Evals')">Previous Evals</button>
-            <button class="tablinks active" onClick="switchTab('Information')">Information</button>
+            <button class="tablinks">Resources</button>
+            <button class="tablinks">Settings</button>
+            <button class="tablinks">Previous Evals</button>
+            <button class="tablinks active">Information</button>
         </div>
-        <h1><span id="number-of-evals-today">0</span> Evaluations Today!</h1>
-        <button id='next-eval'>Do an Evaluation!</button>
+
+        <!--NOTE these tab contents are the same order as above for JS reasons-->
+
+        <!--Resources-->
+        <div class="tab-contents">
+            <a href="https://www.khanacademy.org/computer-programming/yapep-dates/6225623948034048">YAPEP</a><br>
+            <a href="https://www.khanacademy.org/computer-programming/commonly-plagiarized-projects/4693064967192576">Commonly Plagiarized 1</a><br>
+            <a href="https://www.khanacademy.org/computer-programming/frequently-copied-programs/5403432869232640">Commonly Plagiarized 2</a><br>
+            <a href="https://www.khanacademy.org/computer-programming/frequently-plagiarized-programs/6423239324958720">Commonly Plagiarized 3</a><br>
+            <a href="https://www.khanacademy.org/computer-programming/doing-great-cs-project-evaluations-general/6252801587085312">DGPE General</a><br>
+            <a href="https://www.khanacademy.org/computer-programming/doing-great-cs-project-evaluations-intro-to-js/6643714399862784">DGPE Intro To JS</a>
+
+
+        </div>
+        <!--Settings-->
+        <div class="tab-contents">
+            <h3>Change what projects will be given to you.</h3>
+            <div id="projects-to-find">
+            <input type="checkbox" name="Project: What's For Dinner" value="Project: What's For Dinner">Project: What's For Dinner
+            <input type="checkbox" name="Project: Magic 8-Ball" value="Project: Magic 8-Ball">Project: Magic 8-Ball
+            </div>
+        </div>
+        <!--Previous Evals-->
+        <div class="tab-contents">
+            
+        </div>
+        <!--Information-->
+        <div class="tab-contents active">
+            <h1><span id="number-of-evals-today">0</span> Evaluations Today!</h1>
+            <button id='next-eval'>Do an Evaluation!</button>
+        </div>
+        <p id="search-for-storage"></p>
     </body>
     <script src="jquery-2.1.3.min.js"></script>
     <script src="popup.js"></script>
