@@ -1,0 +1,45 @@
+<html>
+    <head>
+      <title>Eval Popup</title>
+      <style>
+          body{
+              width: 600px;
+              height:300px;
+          }
+          .tablinks{
+              width:23%;
+              height: 10%;
+              font-size:15px;
+              margin: 0.70%;
+              margin-top:3%;
+              padding: 3px;
+              border-top-left-radius: 10px;
+              border-top-right-radius: 10px;
+              border: 1px solid rgb(100, 100, 100);
+              background-color: rgb(200, 200, 200);
+          }
+          .tablinks:hover{
+              border: 1px solid rgb(100, 100, 100);
+              background-color: rgb(160, 160, 160);
+          }
+          .tablinks.active{
+              width:24%;
+              height: 14%;
+              margin: 0.5%;
+              margin-top:-100%;
+          }
+      </style>
+    </head>
+    <body>
+        <div class="tabs">
+            <button class="tablinks" onClick="switchTab('Resources')">Resources</button>
+            <button class="tablinks" onClick="switchTab('Settings')">Settings</button>
+            <button class="tablinks" onClick="switchTab('Previous Evals')">Previous Evals</button>
+            <button class="tablinks active" onClick="switchTab('Information')">Information</button>
+        </div>
+        <h1><span id="number-of-evals-today">0</span> Evaluations Today!</h1>
+        <button id='next-eval'>Do an Evaluation!</button>
+    </body>
+    <script src="jquery-2.1.3.min.js"></script>
+    <script src="popup.js"></script>
+  </html>
