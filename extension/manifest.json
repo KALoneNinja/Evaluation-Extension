@@ -1,6 +1,7 @@
 {
+    "content_security_policy": "script-src https://www.khanacademy.org/ 'self'; object-src 'self'",
     "manifest_version": 2,
-    "name": "My Cool Extension",
+    "name": "Khan Academy Evaluation Extension",
     "version": "0.1",
     "background": {
         "scripts": ["background.js"]
@@ -18,6 +19,7 @@
         "default_popup": "popup.html"
       },
       "permissions": [
-          "debugger"
+          "debugger",
+          "storage"
       ]
 }
