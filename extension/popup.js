@@ -40,6 +40,36 @@ for(var i = 0; i < links.length; i ++){
 
 
 
+/**          Handle evals for today storage and initialization         */
+
+chrome.storage.sync.get(["evals"], function(item){
+    var evals = item.evals;
+    if(evals){
+        var today = new Date();
+        var todayString = today.getMonth() + "/" + today.getDate() + "/" + today.getFullYear;
+        if(evals[todayString]){
+            $("#number-of-evals-today").text(evals[todayString]);
+        } else{
+            evals[todayString] = 0;
+            $("#number-of-evals-today").text(0);
+            chrome.storage.sync.set({evals:evals});
+        }
+    } else{
+        chrome.storage.sync.set({evals:{}}, function(){
+            chrome.storage.sync.get(["evals"], function(item){
+                var evals = item.evals;
+                var today = new Date();
+                var todayString = today.getMonth() + "/" + today.getDate() + "/" + today.getFullYear;
+                evals[todayString] = 0;
+                $("#number-of-evals-today").text(0);
+                chrome.storage.sync.set({evals:evals});
+            })
+        })
+    }
+})
+
+
+
 /**       Handle Chrome storage and project options          **/
 
 //the checkboxes for the project options
@@ -93,6 +123,15 @@ for(var i = 0; i < prjctsTF.length; i ++){
 //when you press the "do an evaluation" button, take you to an evaluation that fits within your settings
 $("#next-eval").on("click", function(){
 
+    var loadingAnimation = window.setInterval(function(){
+        var result = document.getElementById("evaluation-search-result");
+        result.innerText += ".";
+        if(result.innerText.length > 4){
+            result.innerText = "";
+        }
+    }, 300)
+    
+
     //what projects we can open based on settings in popup
     var allowableStrings = document.getElementById("search-for-storage").innerText;
 
@@ -114,11 +153,18 @@ $("#next-eval").on("click", function(){
                 allowableIndexes.push(i);
             }
         }
+        
+        window.clearInterval(loadingAnimation)
+
         //if there is a project to open
         if(allowableIndexes.length > 0){
+            
+            document.getElementById("evaluation-search-result").innerText = "";
 
             //open one of the projects randomly
             window.open(("https://khanacademy.org" + data.feedback[allowableIndexes[Math.floor(Math.random()*allowableIndexes.length)]].focusUrl), "_blank");
+        } else{
+            document.getElementById("evaluation-search-result").innerText = "Couldn't find a project. Try using YAPEP (in resources)"
         }
     })
 });
