@@ -426,7 +426,7 @@ var projects = {
             if(oneFeed.length === 2){
                 pass = false;
                 if(oneFeed[1].value === ""){
-                    oneFeed[1].value = "If you ever need help, you can find it in the help requests tab beneath your programm. Just post a comment there, and you should get some good help within a day.";
+                    oneFeed[1].value = "If you ever need help, you can find it in the help requests tab beneath your program. Just post a comment there, and you should get some good help within a day.";
                 }
             }
 
@@ -451,17 +451,108 @@ var projects = {
             //the following code adds stuff to the message depending on checkboxes
             var checkBoxes = $("#feedback-generator-main-div input");
 
-            //indents
-            if(checkBoxes[0].checked){
-                extraCompliments += "I love your use of indents"
-            } else{
-                extraSuggestions += "\nindents can really make your code easier to read. Put an indent on every line between {} or () or [], and you will find it looks much better, I suggest you look at Pamela's and other's code and mirror how they indent."
+            var compliments = 0;
+            var complimentsToDo = 0;
+            for(var i = 0; i < 4; i ++){
+                if(checkBoxes[i].checked){
+                    complimentsToDo ++;
+                }
             }
 
-            
+            //indents
+            if(checkBoxes[0].checked){
+                if(compliments === 0){
+                    extraCompliments += "I love ";
+                } else{
+                    if(complimentsToDo === 1){
+                        extraCompliments += ", and ";
+                    } else{
+                        extraCompliments += ", ";
+                    }
+                }
+                extraCompliments += " your use of indents"
+                var addOn = $("#indents-textArea")[0];
+                if(addOn.value.length > 0){
+                    extraCompliments += " on lines " + addOn.value;
+                }
+                compliments ++;
+                complimentsToDo --;
+            } else{
+                extraSuggestions += "\n\nIndents can really make your code easier to read. Put an indent on every line between {} or () or [], and you will find it looks much better, I suggest you look at Pamela's and other's code and mirror how they indent."
+            }
+
+            //comments
+            if(checkBoxes[1].checked){
+                if(compliments === 0){
+                    extraCompliments += "I love ";
+                } else{
+                    if(complimentsToDo === 1){
+                        extraCompliments += ", and ";
+                    } else{
+                        extraCompliments += ", ";
+                    }
+                }
+                extraCompliments += "your use of comments"
+                var addOn = $("#comments-textArea")[0];
+                if(addOn.value.length > 0){
+                    extraCompliments += " on lines " + addOn.value;
+                }
+                compliments ++;
+                complimentsToDo --;
+            } else{
+                extraSuggestions += "\n\n I really want you to start using comments like:\n```//generate random whole number between 1 and 4\nvar answer = floor(random(1, 5));```\nIt may be a bit silly for this project, but it is important to get in the habit. Later you will need comments when other coders are trying to help you or learn from you, and when you try to navigate code you made 1+ weeks ago."
+            }
+
+            //documentation
+            if(checkBoxes[2].checked){
+                if(compliments === 0){
+                    extraCompliments += "I love ";
+                } else{
+                    if(complimentsToDo === 1){
+                        extraCompliments += ", and ";
+                    } else{
+                        extraCompliments += ", ";
+                    }
+                }
+                var addOn = $("#documentation-textArea")[0];
+                if(addOn.value.length === 0){
+                    extraCompliments += "that you used the documentation";
+                } else{
+                    extraCompliments += "that you used " + addOn.value + " from the documentation"
+                }
+                compliments ++;
+                complimentsToDo --;
+            } else{
+                extraSuggestions += "\n\nIt would have been great to have seen you go to the documentation and use something from there. Experimentation is a really big part of programming, and the more you experiment right now, the better you will be prepared for the future. On this project, it would have been very beneficial for you to have looked at the text section of the documentation. Instead of doing something like:\n```if (answer === 1){\n    text(\"IN\", 176, 200);\n    text(\"YOUR DREAMS\", 159, 229);\n}else if (answer === 2){\n    text(\"NOT\", 176, 200);\n    text(\"HAPPENING\", 159, 229);\n}```\nYou can just do:\n```textAlign(CENTER, CENTER);\nif (answer === 1){\n    text(\"IN\\nYOUR DREAMS\", 200, 200);\n}else if (answer === 2){\n    text(\"NOT\\nHAPPENING\", 200, 200);\n}```\nSee how useful that was?"
+            }
+
+            //line breaks
+            if(checkBoxes[3].checked){
+                
+                if(compliments === 0){
+                    extraCompliments += "I love ";
+                } else{
+                    if(complimentsToDo === 1){
+                        extraCompliments += ", and ";
+                    } else{
+                        extraCompliments += ", ";
+                    }
+                }
+                extraCompliments += "your use of line breaks"
+                var addOn = $("#line_breaks-textArea")[0];
+                if(addOn.value.length > 0){
+                    extraCompliments += " on lines " + addOn.value;
+                }
+                compliments ++;
+                complimentsToDo --;
+            } else{
+                extraSuggestions += "\n\n I really want you to start using line breaks to split your code into more manageable chunks. A line break is simply an empty line of code, try it out and see what you think!"
+            }
+
+            $("._qwk47qNaN")[0].value = "Hi! I evaluated your project. If you have any questions, thoughts, want some advice, or want any projects evaluated, you can contact me here.";
 
             var finalFeed = $("textarea.discussion-text.eval-text");
-            finalFeed[finalFeed.length-1].value += "Nice Job " + projectOwner + "! " + extraCompliments + extraSuggestions + "!\n-_ " + evaluationAuthor + " (with help of Auto Feedback Generator Extension[testing][version: 0.6.1])_";
+            finalFeed[finalFeed.length-1].value += "Nice Job " + projectOwner + "! " + extraCompliments + "!" + extraSuggestions + "\n\nKeep up the hard work! - " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
         },
         helpButtons: function(){
             //the "?" buttons for the feedback generating check boxes
@@ -512,13 +603,15 @@ var projects = {
                 <button class='feedback-help-button indents'>?</button>\
                 <div class='bubble indents disabled'/>\
                 <input type='checkbox' name='indents' value='indents'>\
-                there are indents\
+                They used indents\
+                <textArea id='indents-textArea' cols='80' placeholder='The line of the indent e.g. \"15 and 16\"'/>\
             </div><br>\
             <div class='everything-button-div'>\
                 <button class='feedback-help-button comments'>?</button>\
                 <div class='bubble comments disabled'/>\
                 <input type='checkbox' name='comments' value='comments'>\
-                Included Comments\
+                They used Comments\
+                <textArea id='comments-textArea' cols='80' placeholder='The line of the comment e.g. \"15 and 16\"'/>\
             </div><br>\
         </div>\
         <div id='right-feedback-checkboxes'>\
@@ -526,13 +619,15 @@ var projects = {
                 <button class='feedback-help-button documentation'>?</button>\
                 <div class='bubble documentation disabled'/>\
                 <input type='checkbox' name='documentation' value='documentation'>\
-                Used Documentation\
+                They used something from the Documentation that wasn't taught\
+                <textArea id='documentation-textArea' cols='80' placeholder='The function(s) the student used e.g. \"textFont(\"cursive\");\"'/>\
             </div><br>\
             <div class='everything-button-div'>\
                 <button class='feedback-help-button line-breaks'>?</button>\
                 <div class='bubble line-breaks disabled'/>\
                 <input type='checkbox' name='line-breaks' value='line-breaks'>\
                 Line Breaks\
+                <textArea id='line_breaks-textArea' cols='80' placeholder='The line of the comment e.g. \"15 and 16\"'/>\
             </div>\
         </div>\
         <br class='clear'>\
