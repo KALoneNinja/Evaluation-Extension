@@ -11,41 +11,5 @@
   <li> Before clicking on "Evaluate This Project", wait for a green "ready" to pop up
 </ul>
 
-<h3>Version History</h3>
-<h4>0.5.0.5: feedback generation</h4>
-11/17/19
-<ul>
-  <li>Started on Magic 8 Ball feedback
-</ul>
-<h4>0.5.0: Chrome Storage</h4>
-11/17/19
-<ul>
-  <li>Created Evaluations Today
-  <li>applied settings to Do an evaluation button
-  <li>Created settings
-</ul>
-<h4>0.4.0: Do Evaluation Button</h4>
-11/16/19
-<ul>
-  <li>Created Do an evaluation button
-</ul>
-<h4>0.3.0: UI in pop-up</h4>
-11/16/19
-<ul>
-  <li>Created tab system
-  <li>Created resources
-</ul>
-<h4>0.2.0: UI in KA</h4>
-11/16/19
-<ul>
-  <li>Created Check-boxes in KA website
-  <li>Created help bubbles
-</ul>
-<h4>0.1.0: Beginning</h4>
-11/16/19
-<ul>
-  <li>Created files
-  <li>Brief Pop-up styling
-</ul>
-
-
+<h3>Current Version and Works</h3>
+<p>Version 0.5.1 will come out with feedback generation for Magic 8 Ball.</p>
