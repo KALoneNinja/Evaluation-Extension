@@ -228,7 +228,7 @@ var projects = {
                         var a = parseFloat(extras[3].childNodes[4].childNodes[1].value);
                         var b = parseFloat(extras[3].childNodes[4].childNodes[3].value);
                         var vals = extras[3].childNodes[4].childNodes[5].value;
-                        console.log("a: " + a + ", b: " + b + ", val: " + vals);
+                        //console.log("a: " + a + ", b: " + b + ", val: " + vals);
                         oneFeed[1].value += ("The problem here is that `random(" + a + ", " + b + ")` at its max returns ~" + (b-0.0001) + " and at its minimum will return " + a + ".0000. " + a + ".0000 rounded down with floor is " + a + " and " + (b - 0.0001) + " rounded down is " + (b-1) + ". Your if statement for the value " + vals + " doesn't fit within that range. Perhaps you could extend the range `floor(random())` will return?");
                     }
 
@@ -407,7 +407,7 @@ var projects = {
             $("<input>").attr("type", "text").attr("id", "floor_max-textArea").attr("value", "5").css("width", "24px").appendTo(span);
             $("<label>").text("))   The value the statement(s) use: ").appendTo(span);
             $("<input>").attr("type", "text").attr("id", "if_value-textArea").attr("value", "0, 5, and 6").css("width", "100px").appendTo(span);
-            appendCheck(div, "no_if_message", "An if statement with a condition that is never true.", span);
+            appendCheck(div, "no_if_message", "There is an if statement with a condition that is never true. ", span);
             //
 
             var span = $("<span>");
@@ -417,7 +417,7 @@ var projects = {
             $("<input>").attr("type", "text").attr("id", "floor_max-textArea").attr("value", "5").css("width", "24px").appendTo(span);
             $("<label>").text("))   The values not covered: ").appendTo(span);
             $("<input>").attr("type", "text").attr("id", "answer_value-textArea").attr("value", "1 and 4").css("width", "100px").appendTo(span);
-            appendCheck(div, "no_answer_message", "There is no if statement for a value of answer", span)
+            appendCheck(div, "no_answer_message", "There is no if statement for a value of answer. ", span)
             //
             
             $("<br>").insertAfter(div);
@@ -431,7 +431,7 @@ var projects = {
             appendCheck(div.left, "documentation", "They used something from documentation", "The function(s) the student used e.g. \"textAlign(CENTER, CENTER);\"");
 
             appendCheck(div.right, "comments", "They used comments", "The line of the comment(s) e.g. \"15 and 16\"");
-            appendCheck(div.right, "line-breaks", "they used line breaks", "The line of the line break(s) e.g. \"15 and 16\"");
+            appendCheck(div.right, "line_breaks", "they used line breaks", "The line of the line break(s) e.g. \"15 and 16\"");
 
 
         }
@@ -704,9 +704,6 @@ $(window).on("load", function(){
                 
                 var projectType = $("._1g8isxy8")[0].innerText;
 
-                
-
-                
 
                 //append styling for the additions
                 $("<style>").html(CSS).appendTo("head");
