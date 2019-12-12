@@ -113,7 +113,7 @@ var appendMainDiv = function(){
     $("<h2>").text("Evaluation Feedback Generator").appendTo(whole);
     $("<h3>").text("Instructions").appendTo(whole);
     $("<p>").text("Look at the project, and click on all of the boxes that apply (including pass/fail boxes). Some will give you an option to specify the location or type of thing, and I suggest you fill those out. After that is done, click \"generate evaluation\". And finally, read it over and modify it where you want.").appendTo(whole);
-    $("<h4>").attr("id", "auto-eval-warn").text("Please don't rely on this alone for evaluations, it is by far inferior to the evaluations you can do. Add and improve on what this gives you.")
+    $("<h4>").attr("id", "auto-eval-warn").text("Please don't rely on this alone for evaluations, it is by far inferior to the evaluations you can do. Add and improve on what this gives you.").appendTo(whole);
     var div = {};
     div.left = $("<div>").attr("id", 'left-feedback-checkboxes').appendTo(whole);
     div.right = $("<div>").attr("id", 'right-feedback-checkboxes').appendTo(whole);
@@ -691,7 +691,7 @@ $(window).on("load", function(){
     //IMPORTANT: This interval is needed because the KA page lies about when it is done loading (above)
     var readyWait = window.setInterval(function(){
 
-        if($(".eval-left")[0].length < 1){
+        if($(".eval-left")[0]){
             return;
         }
 
