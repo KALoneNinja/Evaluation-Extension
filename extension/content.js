@@ -690,10 +690,11 @@ $(window).on("load", function(){
 
     //IMPORTANT: This interval is needed because the KA page lies about when it is done loading (above)
     var readyWait = window.setInterval(function(){
-
-        if($(".eval-left")[0]){
+        if(!$(".eval-left").text().includes("This project has an open evaluation request.")){
             return;
         }
+        
+        
 
         $("<style>").html(CSS2).appendTo("head");
         $("<span>").attr("id", "eval-ready-for-generator").html("ready").appendTo(".eval-left");
