@@ -82,7 +82,7 @@ var CSS2 =
     color:green;\
     font-size:25px;\
     top: 0px;\
-    left: 300px;\
+    left: 260px;\
 }\
 ";
 }
@@ -688,8 +688,13 @@ var projects = {
 //when page loaded
 $(window).on("load", function(){
 
-    //IMPORTANT: This timeout delay is needed because the KA page lies about when it is done loading (above)
-    window.setTimeout(function(){
+    //IMPORTANT: This interval is needed because the KA page lies about when it is done loading (above)
+    var readyWait = window.setInterval(function(){
+
+        if($(".eval-left")[0].length < 1){
+            return;
+        }
+
         $("<style>").html(CSS2).appendTo("head");
         $("<span>").attr("id", "eval-ready-for-generator").html("ready").appendTo(".eval-left");
         
@@ -791,5 +796,8 @@ $(window).on("load", function(){
 
             }, 200);
         })
-    }, 6000)
+
+        //we don't have to retry all of this again!
+        window.clearInterval(readyWait);
+    }, 1000)
 })
