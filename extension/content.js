@@ -388,7 +388,12 @@ var projects = {
             $("._qwk47qNaN")[0].value = "Hi! I evaluated your project. If you have any questions, thoughts, want some advice, or want any projects evaluated, you can contact me here.";
 
             var finalFeed = $("textarea.discussion-text.eval-text");
-            finalFeed[finalFeed.length-1].value += "Nice Job " + projectOwner + "! " + extraCompliments + "!" + extraSuggestions + "\n\nKeep up the hard work! - " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
+
+            if(pass){
+                finalFeed[finalFeed.length-1].value += "Nice job " + projectOwner + "! ";
+            }
+
+            finalFeed[finalFeed.length-1].value += extraCompliments + "!" + extraSuggestions + "\n\nKeep up the hard work! - " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
         },
         appendHTML: function(){
             
