@@ -315,30 +315,8 @@ var projects = {
                 extraSuggestions += "\n\nIndents can really make your code easier to read. Put an indent on every line between {} or () or [], and you will find it looks much better, I suggest you look at Pamela's and other's code and mirror how they indent."
             }
 
-            //comments
-            if(checkBoxes[1].checked){
-                if(compliments === 0){
-                    extraCompliments += "I love ";
-                } else{
-                    if(complimentsToDo === 1){
-                        extraCompliments += ", and ";
-                    } else{
-                        extraCompliments += ", ";
-                    }
-                }
-                extraCompliments += "your use of comments"
-                var addOn = $("#comments-textArea")[0];
-                if(addOn.value.length > 0){
-                    extraCompliments += " on lines " + addOn.value;
-                }
-                compliments ++;
-                complimentsToDo --;
-            } else{
-                extraSuggestions += "\n\n I really want you to start using comments like:\n```//generate random whole number between 1 and 4\nvar answer = floor(random(1, 5));```\nIt may be a bit silly for this project, but it is important to get in the habit. Later you will need comments when other coders are trying to help you or learn from you, and when you try to navigate code you made 1+ weeks ago."
-            }
-
             //documentation
-            if(checkBoxes[2].checked){
+            if(checkBoxes[1].checked){
                 if(compliments === 0){
                     extraCompliments += "I love ";
                 } else{
@@ -359,6 +337,30 @@ var projects = {
             } else{
                 extraSuggestions += "\n\nIt would have been great to have seen you go to the documentation and use something from there. Experimentation is a really big part of programming, and the more you experiment right now, the better you will be prepared for the future. On this project, it would have been very beneficial for you to have looked at the text section of the documentation. Instead of doing something like:\n```if (answer === 1){\n    text(\"IN\", 176, 200);\n    text(\"YOUR DREAMS\", 159, 229);\n}else if (answer === 2){\n    text(\"NOT\", 176, 200);\n    text(\"HAPPENING\", 159, 229);\n}```\nYou can just do:\n```textAlign(CENTER, CENTER);\nif (answer === 1){\n    text(\"IN\\nYOUR DREAMS\", 200, 200);\n}else if (answer === 2){\n    text(\"NOT\\nHAPPENING\", 200, 200);\n}```\nSee how useful that was?"
             }
+
+            //comments
+            if(checkBoxes[2].checked){
+                if(compliments === 0){
+                    extraCompliments += "I love ";
+                } else{
+                    if(complimentsToDo === 1){
+                        extraCompliments += ", and ";
+                    } else{
+                        extraCompliments += ", ";
+                    }
+                }
+                extraCompliments += "your use of comments"
+                var addOn = $("#comments-textArea")[0];
+                if(addOn.value.length > 0){
+                    extraCompliments += " on lines " + addOn.value;
+                }
+                compliments ++;
+                complimentsToDo --;
+            } else{
+                extraSuggestions += "\n\n I really want you to start using comments like:\n```//generate random whole number between 1 and 4\nvar answer = floor(random(1, 5));```\nIt may be a bit silly for this project, but it is important to get in the habit. Later you will need comments when other coders are trying to help you or learn from you, and when you try to navigate code you made 1+ weeks ago."
+            }
+
+            
 
             //line breaks
             if(checkBoxes[3].checked){
