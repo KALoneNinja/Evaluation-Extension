@@ -71,6 +71,10 @@ clear:auto;\
 #feedback-generation-btn{\
     \
 }\
+#feedback-generation-click_response{\
+    color:red;\
+    margin: 7px;\
+}\
 ";
 }
 
@@ -120,6 +124,7 @@ var appendMainDiv = function(){
 
     $("<br>").addClass("clear").appendTo(whole);
     $("<button>").attr("id", "feedback-generation-btn").text("generate evaluation").appendTo(whole);
+    $("<label>").attr("id", "feedback-generation-click_response").appendTo(whole);
 
     return div;
 };
@@ -741,7 +746,15 @@ $(window).on("load", function(){
 
                 //generate feedback
                 $("#feedback-generation-btn").on("click", function(){
-                    projects[projectType].generateFeedback();
+                    
+                    //if the pass/fail are selected _qch9n6d is the class for a passed button
+                    if($("._qch9n6d") !== undefined && $("._qch9n6d").length === 6){
+                        $("#feedback-generation-click_response").text("");
+                        projects[projectType].generateFeedback();
+                    } else{
+                        $("#feedback-generation-click_response").text("You have not selected all of the pass or fail boxes!");
+                    }
+                    
                 });
 
                 
