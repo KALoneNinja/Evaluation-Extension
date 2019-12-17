@@ -260,7 +260,7 @@ var projects = {
                 }
             }
 
-            //uses floor(random())
+            //syntax error
             var oneFeed = $allFeed[4].childNodes[2].childNodes;
             if(oneFeed.length === 2){
                 pass = false;
@@ -269,7 +269,7 @@ var projects = {
                 }
             }
 
-            //uses floor(random())
+            //plagiarism
             var oneFeed = $allFeed[5].childNodes[2].childNodes;
             if(oneFeed.length === 2){
                 pass = false;
@@ -317,7 +317,7 @@ var projects = {
                 compliments ++;
                 complimentsToDo --;
             } else{
-                extraSuggestions += "\n\nIndents can really make your code easier to read. Put an indent on every line between {} or () or [], and you will find it looks much better, I suggest you look at Pamela's and other's code and mirror how they indent."
+                extraSuggestions += "\n\nCorrectly placed indents can make your code easier to read. Put an indent (one tab or two spaces) on every line between {} and your code will be tidier. Look to Pamela's code for examples!"
             }
 
             //documentation
@@ -387,10 +387,10 @@ var projects = {
                 compliments ++;
                 complimentsToDo --;
             } else{
-                extraSuggestions += "\n\n I really want you to start using line breaks to split your code into more manageable chunks. A line break is simply an empty line of code, try it out and see what you think!"
+                extraSuggestions += "\n\n I really want you to start using blank lines of code to split your code into more manageable chunks. Try it out and see what you think!"
             }
 
-            $("._qwk47qNaN")[0].value = "Hi! I evaluated your project. If you have any questions, thoughts, want some advice, or want any projects evaluated, you can contact me here.";
+            $("#ka-uid-discussiontabbedpanel-0--tabbedpanel-content")[0].value = "Hi! I evaluated your project. If you have any questions, thoughts, want some advice, or want any projects evaluated, you can contact me here.";
 
             var finalFeed = $("textarea.discussion-text.eval-text");
 
@@ -439,11 +439,11 @@ var projects = {
 
             var div = appendMainDiv();
 
-            appendCheck(div.left, "indents", "they used indents", "The line of the indent(s) e.g. \"15 and 16\"");
+            appendCheck(div.left, "indents", "They used indents", "The line of the indent(s) e.g. \"15 and 16\"");
             appendCheck(div.left, "documentation", "They used something from documentation", "The function(s) the student used e.g. \"textAlign(CENTER, CENTER);\"");
 
             appendCheck(div.right, "comments", "They used comments", "The line of the comment(s) e.g. \"15 and 16\"");
-            appendCheck(div.right, "line_breaks", "they used line breaks", "The line of the line break(s) e.g. \"15 and 16\"");
+            appendCheck(div.right, "line_breaks", "They've used blank lines to signal new code sections", "The line of the line break(s) e.g. \"15 and 16\"");
 
 
         }
