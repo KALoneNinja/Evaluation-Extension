@@ -136,7 +136,7 @@ $("#next-eval").on("click", function(){
     var allowableStrings = document.getElementById("search-for-storage").innerText;
 
     //retrieves data and opens up a project
-    $.getJSON("https://www.khanacademy.org/api/internal/projecteval?casing=camel&limit=20&topic=computer-programming&max_answers=0&lang=en&callback=?",
+    $.getJSON("https://www.khanacademy.org/api/internal/projecteval?casing=camel&limit=100&topic=computer-programming&max_answers=0&lang=en&callback=?",
     function(data) {
 
         //array to store projects we can  open
@@ -164,7 +164,11 @@ $("#next-eval").on("click", function(){
             //open one of the projects randomly
             window.open(("https://khanacademy.org" + data.feedback[allowableIndexes[Math.floor(Math.random()*allowableIndexes.length)]].focusUrl), "_blank");
         } else{
-            document.getElementById("evaluation-search-result").innerText = "Couldn't find a project. Try using YAPEP (in resources)"
+            var searchResult = $("#evaluation-search-result");
+            $("<br>").appendTo(searchResult);
+            $("<label>").text("Could not find a project. Select a student's project in ").appendTo(searchResult);
+            $("<a>").attr("href", "https://www.khanacademy.org/computer-programming/yapep-dates/6225623948034048").attr("target", "_blank").text("YAPEP").appendTo(searchResult);
+            $("<label>").text(" and click the Evaluate this project button").appendTo(searchResult);
         }
     })
 });
