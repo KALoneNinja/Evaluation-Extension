@@ -123,7 +123,7 @@ var appendMainDiv = function(){
     div.right = $("<div>").attr("id", 'right-feedback-checkboxes').appendTo(whole);
 
     $("<br>").addClass("clear").appendTo(whole);
-    $("<button>").attr("id", "feedback-generation-btn").text("generate evaluation").appendTo(whole);
+    $("<button>").attr("id", "feedback-generation-btn").text("Generate Evaluation").appendTo(whole);
     $("<label>").attr("id", "feedback-generation-click_response").appendTo(whole);
 
     return div;
@@ -190,7 +190,7 @@ var projects = {
             if(oneFeed.length === 2){
                 pass = false;
                 if(oneFeed[1].value === ""){
-                    oneFeed[1].value = "You need to use === for all of your if statements. This is because in code we strive for simplicity so people can understand our code better, and === is much simpler than < or >. Also, you must show your complete understanding of `floor(random(min, max))`, and this is the only way to do it.";
+                    oneFeed[1].value = "The check for 'exactly equal' is ===. You need to use this in every statement. The only possible exception would be if you make the last statement an 'else' and not 'else if'."//"The check for 'exactly equal' is ===. You need to use this in every statement. The only possible exception would be if you make the last statement an 'else' and not 'else if'. ";
                 }
             }
 
@@ -199,7 +199,7 @@ var projects = {
             if(oneFeed.length === 2){
                 pass = false;
                 if(oneFeed[1].value === ""){
-                    oneFeed[1].value = "else is an important tool for coders. It can make our jobs easier with less code to write, but more importantly it makes things much more efficient. This is why it is important for you to prove that you know how to use it here. If you forgot how to use else, make sure to review the tutorials.";
+                    oneFeed[1].value = "\"else (if)\" is an important tool for coders. It can make our jobs easier with less code to write, but more importantly it makes \"mutually exclusive conditions\". That means that you can never have more than one of the conditions be true when you test it. When your 'answer' is 1, it cannot also be 4. It is inefficient to keep checking other values as your program does without else. The requirement for \"at least two else\" means that you need at least three conditionals to pass, not that you should skip on \"else if\" when you have extra conditionals. If you have forgotten how to use else (which includes else if), and why, make sure to review the tutorials:\nhttps://www.khanacademy.org/computing/computer-programming/programming/logic-if-statements/pt/ifelse-part-2";
                 }
             }
 
@@ -215,7 +215,7 @@ var projects = {
                 if(oneFeed[1].value === ""){
                     
                     var used = false;
-                    //console.log(extras[1]);
+                    
                     //uses value of answer
                     if(extras[1].childNodes[2].checked){
                         
@@ -225,16 +225,16 @@ var projects = {
 
                     //useless if
                     if(extras[3].childNodes[2].checked){
-                        console.log("checked!");
+                        
                         if(used){
                             oneFeed[1].value += "\n\n";
                         }
                         used = true;
-                        var a = parseFloat(extras[3].childNodes[4].childNodes[1].value);
-                        var b = parseFloat(extras[3].childNodes[4].childNodes[3].value);
-                        var vals = extras[3].childNodes[4].childNodes[5].value;
-                        //console.log("a: " + a + ", b: " + b + ", val: " + vals);
-                        oneFeed[1].value += ("The problem here is that `random(" + a + ", " + b + ")` at its max returns ~" + (b-0.0001) + " and at its minimum will return " + a + ".0000. " + a + ".0000 rounded down with floor is " + a + " and " + (b - 0.0001) + " rounded down is " + (b-1) + ". Your if statement for the value " + vals + " doesn't fit within that range. Perhaps you could extend the range `floor(random())` will return?");
+
+                        oneFeed[1].value += "You must change the input to the random function so that all the texts have a fair chance of being displayed. Your conditionals do not quite fit the range of possible 'answer's. Can you figure out which of your expected 'answer'(s) are not in that range? ";
+                        if(!extras[5].childNodes[2].checked){
+                            oneFeed[1].value += "The article Random numbers just before this project explains both which numbers random(1, 5) can return, and also what floor will do to a number.";
+                        }
                     }
 
                     //no if for value
@@ -242,11 +242,9 @@ var projects = {
                         if(used){
                             oneFeed[1].value += "\n\n";
                         }
-                        var a = parseFloat(extras[5].childNodes[4].childNodes[1].value);
-                        var b = parseFloat(extras[5].childNodes[4].childNodes[3].value);
-                        var vals = extras[5].childNodes[4].childNodes[5].value;
+                        
                         used = true;
-                        oneFeed[1].value += ("The problem here is that `random(" + a + ", " + b + ")` at its max returns ~" + (b-0.0001) + " and at its minimum will return " + a + ".0000. " + a + ".0000 rounded down with floor is " + a + " and " + (b - 0.0001) + " rounded down is " + (b-1) + ". Your if statements do not completely cover that range, specifically for " + vals + ". Try adding more if statements.");
+                        oneFeed[1].value += "All possible values of 'answer' need to have its own text displaying. Which value(s) of 'answer' is/are missing in your project? The article Random numbers just before this project explains both which numbers random(1, 5) can return, and also what floor will do to a number."
                     }
                 }
             }
@@ -265,7 +263,7 @@ var projects = {
             if(oneFeed.length === 2){
                 pass = false;
                 if(oneFeed[1].value === ""){
-                    oneFeed[1].value = "If you ever need help, you can find it in the help requests tab beneath your program. Just post a comment there, and you should get some good help within a day.";
+                    oneFeed[1].value = "If you ever need help, you can use the Request help button beneath your program. Just post a message explaining the issue there, following instructions in https://www.khanacademy.org/computing/computer-programming/programming/becoming-a-community-coder/a/ask-for-program-help ";
                 }
             }
 
@@ -274,7 +272,7 @@ var projects = {
             if(oneFeed.length === 2){
                 pass = false;
                 if(oneFeed[1].value === ""){
-                    oneFeed[1].value = "Link:\nPlease don't plagiarize, you will waste all of our time. You won't learn what you should, and I will be kept away from other projects that are actually proving something. Not to mention it is rude to te author.";
+                    oneFeed[1].value = "Link:\nPlease don't plagiarize, it's a waste of time. You won't learn what you should, and I will be kept away from projects that deserve feedback. It is also rude to the author.";
                 }
             }
 
@@ -340,7 +338,7 @@ var projects = {
                 compliments ++;
                 complimentsToDo --;
             } else{
-                extraSuggestions += "\n\nIt would have been great to have seen you go to the documentation and use something from there. Experimentation is a really big part of programming, and the more you experiment right now, the better you will be prepared for the future. On this project, it would have been very beneficial for you to have looked at the text section of the documentation. Instead of doing something like:\n```if (answer === 1){\n    text(\"IN\", 176, 200);\n    text(\"YOUR DREAMS\", 159, 229);\n}else if (answer === 2){\n    text(\"NOT\", 176, 200);\n    text(\"HAPPENING\", 159, 229);\n}```\nYou can just do:\n```textAlign(CENTER, CENTER);\nif (answer === 1){\n    text(\"IN\\nYOUR DREAMS\", 200, 200);\n}else if (answer === 2){\n    text(\"NOT\\nHAPPENING\", 200, 200);\n}```\nSee how useful that was?"
+                extraSuggestions += "\n\nExperimentation is an important part of programming. At this point the Documentation tab under your coding window is your best friend. The text section contains other text functions, like textAlign, which can be used to center text.\nTip: introduce a line break in a text string with \\n (see an example in the textLeading() part of documentation)";
             }
 
             //comments
@@ -390,7 +388,7 @@ var projects = {
                 extraSuggestions += "\n\n I really want you to start using blank lines of code to split your code into more manageable chunks. Try it out and see what you think!"
             }
 
-            $("#ka-uid-discussiontabbedpanel-0--tabbedpanel-content")[0].value = "Hi! I evaluated your project. If you have any questions, thoughts, want some advice, or want any projects evaluated, you can contact me here.";
+            $("#uid-discussion-input-1-content-input")[0].value = "Hi! I evaluated your project. If you have any questions, thoughts, want some advice, or want any projects evaluated, you can contact me here.";
 
             var finalFeed = $("textarea.discussion-text.eval-text");
 
@@ -412,25 +410,9 @@ var projects = {
 
             appendCheck(div, "answer-val", "the difference in the text is only the value of answer");
 
-            var span = $("<span>");
-            $("<label>").text("floor(random(").appendTo(span);
-            $("<input>").attr("type", "text").attr("id", "floor_min-textArea").attr("value", "1").css("width", "24px").appendTo(span);
-            $("<label>").text(", ").appendTo(span);
-            $("<input>").attr("type", "text").attr("id", "floor_max-textArea").attr("value", "5").css("width", "24px").appendTo(span);
-            $("<label>").text("))   The value the statement(s) use: ").appendTo(span);
-            $("<input>").attr("type", "text").attr("id", "if_value-textArea").attr("value", "0, 5, and 6").css("width", "100px").appendTo(span);
-            appendCheck(div, "no_if_message", "There is an if statement with a condition that is never true. ", span);
-            //
-
-            var span = $("<span>");
-            $("<label>").text("floor(random(").appendTo(span);
-            $("<input>").attr("type", "text").attr("id", "floor_min-textArea").attr("value", "1").css("width", "24px").appendTo(span);
-            $("<label>").text(", ").appendTo(span);
-            $("<input>").attr("type", "text").attr("id", "floor_max-textArea").attr("value", "5").css("width", "24px").appendTo(span);
-            $("<label>").text("))   The values not covered: ").appendTo(span);
-            $("<input>").attr("type", "text").attr("id", "answer_value-textArea").attr("value", "1 and 4").css("width", "100px").appendTo(span);
-            appendCheck(div, "no_answer_message", "There is no if statement for a value of answer. ", span)
-            //
+            appendCheck(div, "no_if_message", "There is an if statement with a condition that is never true. ");
+            
+            appendCheck(div, "no_answer_message", "There is no if statement for a value of answer. ")
             
             $("<br>").insertAfter(div);
 
