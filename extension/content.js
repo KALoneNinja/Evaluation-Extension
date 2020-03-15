@@ -4,92 +4,12 @@
 var HTML;
 
 // CSS  stuff
-{
-var CSS = 
-"#feedback-generator-main-div, .feedback-generator-div{\
-    background-color:rgb(220, 220, 255);\
-    border-radius: 20px;\
-    padding:10px;\
-}\
-#left-feedback-checkboxes{\
-    /*border:1px solid black;*/\
-    width: 50%;\
-    float:left;\
-}\
-#right-feedback-checkboxes{\
-    /*border:1px solid black;*/\
-    float:left;\
-}\
-.clear{\
-clear:auto;\
-}\
-.feedback-help-button{\
-    padding:2px;\
-    border-radius: 10px;\
-}\
-.feedback-help-button.repeat-color.bubble{display:none;}\
-.everything-button-div{\
-    position:relative;\
-}\
-.bubble\
-{\
-    z-index:200;\
-    top: -50px;\
-    left: 50px;\
-    position: absolute;\
-    width: 350px;\
-    height: 180px;\
-    padding: 0px;\
-    background: #CF5858;\
-    -webkit-border-radius: 10px;\
-    -moz-border-radius: 10px;\
-    border-radius: 10px;\
-}\
-\
-.bubble:after\
-{\
-    content: '';\
-    position: absolute;\
-    border-style: solid;\
-    border-width: 20px 20px 20px 0;\
-    border-color: transparent #CF5858;\
-    display: block;\
-    width: 0;\
-    z-index: 1;\
-    left: -20px;\
-    top: 40px;\
-}\
-.disabled{\
-    display: none;\
-}\
-.enabled{\
-    display: block;\
-}\
-#auto-eval-warn{\
-    color: red;\
-}\
-#feedback-generation-btn{\
-    \
-}\
-#feedback-generation-click_response{\
-    color:red;\
-    margin: 7px;\
-}\
-";
-}
+var CSS;
+
 
 //CSS to style ready marker
-{
-var CSS2 = 
-"#eval-ready-for-generator{\
-    position: relative;\
-    color:green;\
-    font-size:25px;\
-    top: 0px;\
-    left: 260px;\
-}\
-";
-}
+var CSS2;
+
 
 var appendCheck = function(apOn, clas, sDesc, pHolder){
     var div = $("<div>").addClass("everything-button-div").appendTo(apOn);
@@ -172,7 +92,11 @@ var projects = {
     },
     "Project: Magic 8-Ball": {
         generateFeedback: function(){
-            var projectOwner = $("._191y9x4m")[0].innerText;
+            if($("._191y9x4m")[0] !== undefined){
+                var projectOwner = $("._191y9x4m")[0].innerText;
+            } else{
+                var projectOwner = $("._1g8isxy8")[0].innerText;
+            }
             var evaluationAuthor = $("._wozql4")[0].innerText;
             var projectType = $("._1g8isxy8")[0].innerText;
             var pass = true;
@@ -432,7 +356,11 @@ var projects = {
     },
     "Project: Build-a-House": {
         generateFeedback: function(){
-            var projectOwner = $("._191y9x4m")[0].innerText;
+            if($("._191y9x4m")[0] !== undefined){
+                var projectOwner = $("._191y9x4m")[0].innerText;
+            } else{
+                var projectOwner = $("._1g8isxy8")[0].innerText;
+            }
             var evaluationAuthor = $("._wozql4")[0].innerText;
             var projectType = $("._1g8isxy8")[0].innerText;
             var pass = true;
@@ -690,8 +618,8 @@ $(window).on("load", function(){
         
         
 
-        $("<style>").html(CSS2).appendTo("head");
-        $("<span>").attr("id", "eval-ready-for-generator").html("ready").appendTo(".eval-left");
+        //$("<style>").html(CSS2).appendTo("head");
+        $("<span>").attr("id", "eval-ready-for-generator").text("ready").appendTo(".eval-left");
         
         //when you click the "evaluate project" button
         $(".eval-button-container button").on("click", function(){
@@ -701,43 +629,51 @@ $(window).on("load", function(){
             //another slight delay we have to deal with
             window.setTimeout(function(){
 
-                
-                var projectType = $("._1g8isxy8")[0].innerText;
+                $("._qwk47qNaN")[0].value = "Hi! I evaluated your project. If you have any questions, thoughts, want some advice, or want any projects evaluated, you can contact me here.";
+
+                chrome.storage.sync.get(["showFeedback"], function(item){
+                    if(item.showFeedback){
+                        var projectType = $("._1g8isxy8")[0].innerText;
 
 
-                //append styling for the additions
-                $("<style>").html(CSS).appendTo("head");
+                        //append styling for the additions
+                        //$("<style>").html(CSS).appendTo("head");
 
-                
+                        
 
-                projects[projectType].appendHTML();
+                        projects[projectType].appendHTML();
 
-                //help button reactions
-                for(var i = 0; i < help.length; i ++){
-                    var btn = $($(".feedback-help-button."+help[i])[0]);
-                    
-                    btn.on("click", function(evt){
-                        var bbl = $($(".bubble."+evt.currentTarget.className.replace("feedback-help-button ", ""))[0]);
-                        if(bbl[0].className.includes("disabled")){
-                            bbl.removeClass("disabled").addClass("enabled")
-                        } else{
-                            bbl.removeClass("enabled").addClass("disabled")
+                        //help button reactions
+                        for(var i = 0; i < help.length; i ++){
+                            var btn = $($(".feedback-help-button."+help[i])[0]);
+                            
+                            btn.on("click", function(evt){
+                                var bbl = $($(".bubble."+evt.currentTarget.className.replace("feedback-help-button ", ""))[0]);
+                                if(bbl[0].className.includes("disabled")){
+                                    bbl.removeClass("disabled").addClass("enabled")
+                                } else{
+                                    bbl.removeClass("enabled").addClass("disabled")
+                                }
+                            });
                         }
-                    });
-                }
 
-                //generate feedback
-                $("#feedback-generation-btn").on("click", function(){
-                    
-                    //if the pass/fail are selected _qch9n6d is the class for a passed button
-                    if($("._qch9n6d") !== undefined && $("._qch9n6d").length === 6){
-                        $("#feedback-generation-click_response").text("");
-                        projects[projectType].generateFeedback();
-                    } else{
-                        $("#feedback-generation-click_response").text("You have not selected all of the pass or fail boxes!");
+                        
+
+                        //generate feedback
+                        $("#feedback-generation-btn").on("click", function(){
+                            
+                            //if the pass/fail are selected _qch9n6d is the class for a passed button
+                            if($("._qch9n6d") !== undefined && ($("._qch9n6d").length === 6 || projectType !== "Magic 8-Ball")){
+                                $("#feedback-generation-click_response").text("");
+                                projects[projectType].generateFeedback();
+                            } else{
+                                $("#feedback-generation-click_response").text("You have not selected all of the pass or fail boxes!");
+                            }
+                            
+                        });    
                     }
-                    
-                });
+                })
+                
 
                 
                 /**          Handle evals for today storage and initialization         */
