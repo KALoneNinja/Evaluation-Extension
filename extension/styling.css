@@ -1,0 +1,79 @@
+#feedback-generator-main-div, .feedback-generator-div{
+    background-color:rgb(220, 220, 255);
+    border-radius: 20px;
+    padding:10px;
+}
+#left-feedback-checkboxes{
+    /*border:1px solid black;*/
+    width: 50%;
+    float:left;
+}
+#right-feedback-checkboxes{
+    /*border:1px solid black;*/
+    float:left;
+}
+.clear{
+clear:auto;
+}
+.feedback-help-button{
+    padding:2px;
+    border-radius: 10px;
+}
+.feedback-help-button.repeat-color.bubble{display:none;}
+.everything-button-div{
+    position:relative;
+}
+.bubble
+{
+    z-index:200;
+    top: -50px;
+    left: 50px;
+    position: absolute;
+    width: 350px;
+    height: 180px;
+    padding: 0px;
+    background: #CF5858;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.bubble:after
+{
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-width: 20px 20px 20px 0;
+    border-color: transparent #CF5858;
+    display: block;
+    width: 0;
+    z-index: 1;
+    left: -20px;
+    top: 40px;
+}
+.disabled{
+    display: none;
+}
+.enabled{
+    display: block;
+}
+#auto-eval-warn{
+    color: red;
+}
+/* #feedback-generation-btn{
+    
+} */
+#feedback-generation-click_response{
+    color:red;
+    margin: 7px;
+}
+
+
+
+#eval-ready-for-generator{
+    position: relative;
+    color:green;
+    font-size:25px;
+    top: 0px;
+    left: 260px;
+}
