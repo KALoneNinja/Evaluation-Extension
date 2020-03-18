@@ -11,7 +11,17 @@
           "matches": [
             "https://www.khanacademy.org/*"
           ],
-          "js": ["jquery-2.1.3.min.js", "content.js"],
+          "js": [
+            "jquery-2.1.3.min.js", 
+            "What_Is_For_Dinner.js", 
+            "Ad_Design.js", 
+            "Fish_Tank.js", 
+            "Magic_8-Ball.js", 
+            "Build-a-House.js", 
+            "Make_it_Rain.js", 
+            "Bookshelf.js", 
+            "content.js"
+          ],
           "css": ["styling.css"]
         }
       ],
