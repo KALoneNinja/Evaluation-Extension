@@ -12,6 +12,6 @@
 </ul>
 
 <h3>Current Version and Works</h3>
-<p>Version 0.7.0 will come out with improved help boxes with styling
+<p>Version 0.7.0 will come out with improved help boxes with styling and feedback length limits
 <p>Soon to have complete feedback generation for Magic 8 Ball (need variety messages and help .</p>
 <p>All other projects need full development</p>
