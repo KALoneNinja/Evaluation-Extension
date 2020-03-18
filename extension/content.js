@@ -1,29 +1,29 @@
 // content.js
 
-//a variable to store the HTML string for UI
-var HTML;
+var random = function(a, b){
+  if(b !== undefined){
+    return Math.random() * (b-a) + a;
+  } else{
+    return Math.random() * a;
+  }
+};
 
-// CSS  stuff
-var CSS;
-
-
-//CSS to style ready marker
-var CSS2;
-
-
-var appendCheck = function(apOn, clas, sDesc, pHolder){
-    var div = $("<div>").addClass("everything-button-div").appendTo(apOn);
+var appendCheck = function(apOn, clas, sDesc, helpText, pHolder){
+  var div = $("<div>").addClass("everything-button-div").appendTo(apOn);
+  if(helpText){
     $("<button>").addClass("feedback-help-button").addClass(clas).text("?").appendTo(div);
-    $("<div>").addClass("bubble").addClass(clas).addClass("disabled").appendTo(div);
-    $("<input>").attr("type", "checkbox").attr("name", clas).attr("value", clas).appendTo(div);
-    $("<label>").text(sDesc).appendTo(div);
-    if(typeof pHolder === "string"){
-        $("<textArea>").attr("id", clas+"-textArea").attr("cols", "80").attr("placeholder", pHolder).appendTo(div);
-    } else if(pHolder){
-        pHolder.appendTo(div);
-    }
-    $("<br>").appendTo(apOn);
+    $("<div>").text(helpText).addClass("bubble").addClass(clas).addClass("disabled").appendTo(div);
     help.push(clas);
+  }
+  $("<input>").attr("type", "checkbox").attr("name", clas).attr("value", clas).appendTo(div);
+  $("<label>").text(sDesc).appendTo(div);
+  if(typeof pHolder === "string"){
+    $("<textArea>").attr("id", clas+"-textArea").attr("cols", "70").attr("placeholder", pHolder).appendTo(div);
+  } else if(pHolder){
+    pHolder.appendTo(div);
+  }
+  $("<br>").appendTo(apOn);
+  
 };
 
 var appendMainDiv = function(){
@@ -51,44 +51,340 @@ var appendMainDiv = function(){
 
 var help = [];
 
+const projectReplies = {};
+projectReplies[WFD.name] = WFD.responses;
+projectReplies[AD.name] = AD.responses;
+projectReplies[FT.name] = FT.responses;
+projectReplies[M8B.name] = M8B.responses;
+projectReplies[BH.name] = BH.responses;
+projectReplies[MR.name] = MR.responses;
+projectReplies[B.name] = B.responses;
+
+/* 
+  This function goes through all of the pass/fail button <li>s and if it has 2 elements
+  it has the failed text box open and is a fail. We then set that text box to a response I have
+  come up with.
+  */
+
+var $allFeed, pass, projectType, compliments, extraCompliments, extraSuggestions;
+// note: needs $allFeed, pass and projectType declared beforehand
+var requirementResponse = function(){
+
+  if(!projectReplies[projectType]){
+    return;
+  }
+  
+
+  // shortened project requirement replies
+  var reqs = projectReplies[projectType].requirements;
+
+  for(var i = 0; i < $allFeed.length-1; i ++){
+
+    // feedback area
+    var oneFeed = $allFeed[i].childNodes[2].childNodes;
+
+    //console.log(projectType);
+
+    
+
+    // if failed
+    if(oneFeed.length === 2){
+      pass = false;
+
+      // if not yet provided feedback
+      if(oneFeed[1].value === ""){
+
+        // if not extra 
+        if(!Array.isArray(reqs[i])){
+
+          // if no add-on
+          if(!reqs[i]["add-ons"]){
+
+            // generate message
+            oneFeed[1].value = reqs[i]["no_add-ons"].messages[Math.floor(random(reqs[i]["no_add-ons"].messages.length))];
+          } else{
+            
+          }
+        }
+        else{
+
+          // div containing extras
+          var extras = $allFeed[2].childNodes[3].childNodes;
+
+          // variable to determine if we need white space
+          var used = false;
+
+          // loop through extras
+          for(var i2 = 0; i2 < reqs[i].length; i2 += 1){
+
+            var spot = i2 * 2 + 1;
+
+            // adds to message if checked
+            if(extras[spot].childNodes[2].checked){
+
+              // if previous messages used: 
+              if(used){
+
+                // space it out
+                oneFeed[1].value += "\n\n";
+              }
+
+
+              if(!reqs[i]["add-ons"]){
+
+                // generate message
+                oneFeed[1].value += reqs[i][i2]["no_add-ons"].messages[Math.floor(random(reqs[i][i2]["no_add-ons"].messages.length))];
+              } else{
+                
+              }
+
+              if(reqs[i][i2].exclusions){
+                if(!extras[reqs[i][i2].exclusions.excludeIf *2 + 1].childNodes[2].checked){
+                  oneFeed[1].value += reqs[i][i2].exclusions.messages[Math.floor(random(reqs[i][i2].exclusions.messages.length))]
+                }
+              }
+
+              used = true;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// goes through all of the critique check boxes and adds to response
+// note: needs compliments, extraSuggestions, extraCompliments and projectType declared beforehand
+var critiqueResponse = function(){
+
+  if(!projectReplies[projectType]){
+    return;
+  }
+
+  //the following code adds stuff to the message depending on checkboxes
+  var checkBoxes = $("#feedback-generator-main-div input");
+            
+  var complimentsToDo = 0;
+  for(var i = 0; i < checkBoxes.length; i ++){
+      if(checkBoxes[i].checked){
+          complimentsToDo ++;
+      }
+  }
+
+  var ctqs = projectReplies[projectType].critiques;
+  for(var i = 0; i < checkBoxes.length; i ++){
+    if(checkBoxes[i].checked){
+      if(compliments === 0){
+        extraCompliments += "I love ";
+      } else{
+        if(complimentsToDo === 1){
+            extraCompliments += ", and ";
+        } else{
+            extraCompliments += ", ";
+        }
+      }
+
+      if(ctqs[i].selected["add-ons"]){
+        
+        var addOn = $(("#"+ctqs[i].checkBox.id+"-textArea"))[0];
+        if(addOn.value.length > 0){
+          var phrases = ctqs[i].selected["add-ons"].messages[Math.floor(random(ctqs[i].selected["no_add-ons"].messages.length))].split("$");
+          
+          extraCompliments += phrases[0] + addOn.value + phrases[1];
+          
+        } else{
+          extraCompliments += ctqs[i].selected["no_add-ons"].messages[Math.floor(random(ctqs[i].selected["no_add-ons"].messages.length))];
+        }
+      } else{
+        extraCompliments += ctqs[i].selected["no_add-ons"].messages[Math.floor(random(ctqs[i].selected["no_add-ons"].messages.length))];
+      }
+
+      compliments ++;
+      complimentsToDo --;
+    } else{
+      extraSuggestions += ctqs[i].unselected["no_add-ons"].messages[Math.floor(random(ctqs[i].unselected["no_add-ons"].messages.length))];
+    }
+    
+  }
+}
+
+// appends all of the check boxes, titles, help boxes, everything
+var appendHTML = function(){
+  var projectType = $("._1g8isxy8")[0].innerText;
+  
+  help = [];
+
+  if(!projectReplies[projectType]){
+    appendMainDiv();
+    return;
+  }
+
+  // shortened project requirement replies
+  var reqs = projectReplies[projectType].requirements;
+
+  for(var i = 0; i < reqs.length; i ++){
+    if(Array.isArray(reqs[i])){
+      //unique answer check boxes
+      var div = $("<div>").addClass("feedback-generator-div").insertAfter($(".eval-peer-rubric-item")[i].childNodes[2]);
+
+      $("<h4>").text("Reason for fail (only fill out if failed)").css("margin", "2px").appendTo(div);
+
+      for(var i2 = 0; i2 < reqs[i].length; i2 ++){
+        appendCheck(div, reqs[i][i2].checkBox.id, reqs[i][i2].checkBox.title, reqs[i][i2].checkBox.help)
+      }
+      $("<br>").insertAfter(div);
+    }
+  }
+
+
+  //checkboxes for general feedback
+
+  var ctqs = projectReplies[projectType].critiques;
+  var div = appendMainDiv();
+
+  for(var i = 0; i < ctqs.length; i ++){
+    
+    var hint = ((ctqs[i].selected["add-ons"] ? ctqs[i].selected["add-ons"].hint : undefined) || (ctqs[i].unselected["add-ons"] ? ctqs[i].unselected["add-ons"].hint : undefined));
+
+    if(i < ctqs.length/2){
+      
+      appendCheck(div.left, ctqs[i].checkBox.id, ctqs[i].checkBox.title, ctqs[i].checkBox.help, hint)
+    } else{
+      appendCheck(div.right, ctqs[i].checkBox.id, ctqs[i].checkBox.title, ctqs[i].checkBox.help, hint);
+    }
+  }
+};
+
 //stores all of the specific project buttons/generation techniques
 var projects = {
     "Project: What's For Dinner": {
-        //when the button to generate feedback is pressed, this will be where it is generated
-        generateFeedback: function(){
-            var projectOwner = $("._191y9x4m")[0].innerText;
-            var evaluationAuthor = $("._wozql4")[0].innerText;
-            var projectType = $("._1g8isxy8")[0].innerText;
-            $("textarea.discussion-text.eval-text")[0].value += "Nice Job " + projectOwner + "! " + "Congratulations on completing " + projectType + "!\n-_ " + evaluationAuthor + " (with help of Auto Feedback Generator Extension_";
-
-        },
-        appendHTML: function(){
-            
+      generateFeedback: function(){
+        if($("._191y9x4m")[0] !== undefined){
+          var projectOwner = $("._191y9x4m")[0].innerText;
+        } else{
+            var projectOwner = $("._1g8isxy8")[0].innerText;
         }
+        var evaluationAuthor = $("._wozql4")[0].innerText;
+        projectType = $("._1g8isxy8")[0].innerText;
+        pass = true;
+
+        $allFeed = $(".eval-left ul div li");
+
+        requirementResponse();
+      
+        //the following code adds stuff to the message
+        extraCompliments = "";
+        if(pass){
+            extraCompliments+= "Congratulations on completing "  + projectType + "! ";
+        }
+        extraSuggestions = "";
+
+        compliments = 0;
+        
+        critiqueResponse();
+
+        $("#uid-discussion-input-1-content-input")[0].value = "Hi! I evaluated your project. If you have any questions, thoughts, want some advice, or want any projects evaluated, you can contact me here.";
+
+        var finalFeed = $("textarea.discussion-text.eval-text");
+
+        if(pass){
+            finalFeed[finalFeed.length-1].value += "Nice job " + projectOwner + "! ";
+        }
+
+        if(compliments > 0){
+          extraCompliments += "!";
+        }
+
+        finalFeed[finalFeed.length-1].value += extraCompliments + extraSuggestions + "\n\nKeep up the hard work! - " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
+          
+
+      }
     },
     "Project: Ad Design": {
-        generateFeedback: function(){
-            var projectOwner = $("._191y9x4m")[0].innerText;
-            var evaluationAuthor = $("._wozql4")[0].innerText;
-            var projectType = $("._1g8isxy8")[0].innerText;
-            $("textarea.discussion-text.eval-text")[0].value += "Nice Job " + projectOwner + "! " + "Congratulations on completing " + projectType + "!\n-_ " + evaluationAuthor + " (with help of Auto Feedback Generator Extension_";
-
-        },
-        appendHTML: function(){
-            
+      generateFeedback: function(){
+        if($("._191y9x4m")[0] !== undefined){
+          var projectOwner = $("._191y9x4m")[0].innerText;
+        } else{
+            var projectOwner = $("._1g8isxy8")[0].innerText;
         }
+        var evaluationAuthor = $("._wozql4")[0].innerText;
+        projectType = $("._1g8isxy8")[0].innerText;
+        pass = true;
+
+        $allFeed = $(".eval-left ul div li");
+
+        requirementResponse();
+      
+        //the following code adds stuff to the message
+        extraCompliments = "";
+        if(pass){
+            extraCompliments+= "Congratulations on completing "  + projectType + "! ";
+        }
+        extraSuggestions = "";
+
+        compliments = 0;
+        
+        critiqueResponse();
+
+        $("#uid-discussion-input-1-content-input")[0].value = "Hi! I evaluated your project. If you have any questions, thoughts, want some advice, or want any projects evaluated, you can contact me here.";
+
+        var finalFeed = $("textarea.discussion-text.eval-text");
+
+        if(pass){
+            finalFeed[finalFeed.length-1].value += "Nice job " + projectOwner + "! ";
+        }
+
+        if(compliments > 0){
+          extraCompliments += "!";
+        }
+
+        finalFeed[finalFeed.length-1].value += extraCompliments + extraSuggestions + "\n\nKeep up the hard work! - " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
+          
+
+      }
     },
     "Project: Fish Tank": {
-        generateFeedback: function(){
-            var projectOwner = $("._191y9x4m")[0].innerText;
-            var evaluationAuthor = $("._wozql4")[0].innerText;
-            var projectType = $("._1g8isxy8")[0].innerText;
-            $("textarea.discussion-text.eval-text")[0].value += "Nice Job " + projectOwner + "! " + "Congratulations on completing " + projectType + "!\n-_ " + evaluationAuthor + " (with help of Auto Feedback Generator Extension_";
-
-        },
-        appendHTML: function(){
-            
+      generateFeedback: function(){
+        if($("._191y9x4m")[0] !== undefined){
+          var projectOwner = $("._191y9x4m")[0].innerText;
+        } else{
+            var projectOwner = $("._1g8isxy8")[0].innerText;
         }
+        var evaluationAuthor = $("._wozql4")[0].innerText;
+        projectType = $("._1g8isxy8")[0].innerText;
+        pass = true;
+
+        $allFeed = $(".eval-left ul div li");
+
+        requirementResponse();
+      
+        //the following code adds stuff to the message
+        extraCompliments = "";
+        if(pass){
+            extraCompliments+= "Congratulations on completing "  + projectType + "! ";
+        }
+        extraSuggestions = "";
+
+        compliments = 0;
+        
+        critiqueResponse();
+
+        $("#uid-discussion-input-1-content-input")[0].value = "Hi! I evaluated your project. If you have any questions, thoughts, want some advice, or want any projects evaluated, you can contact me here.";
+
+        var finalFeed = $("textarea.discussion-text.eval-text");
+
+        if(pass){
+            finalFeed[finalFeed.length-1].value += "Nice job " + projectOwner + "! ";
+        }
+
+        if(compliments > 0){
+          extraCompliments += "!";
+        }
+
+        finalFeed[finalFeed.length-1].value += extraCompliments + extraSuggestions + "\n\nKeep up the hard work! - " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
+          
+
+      }
     },
     "Project: Magic 8-Ball": {
         generateFeedback: function(){
@@ -98,219 +394,23 @@ var projects = {
                 var projectOwner = $("._1g8isxy8")[0].innerText;
             }
             var evaluationAuthor = $("._wozql4")[0].innerText;
-            var projectType = $("._1g8isxy8")[0].innerText;
-            var pass = true;
+            projectType = $("._1g8isxy8")[0].innerText;
+            pass = true;
 
-            var $allFeed = $(".eval-left ul div li");
+            $allFeed = $(".eval-left ul div li");
 
-            /* 
-            This section of code goes through all of the pass/fail button <li>s and if it has 2 elements
-            it has the failed text box open and is a fail. We then set that text box to a response I have
-            come up with.
-            */
-
-            //fails for not using ===
-            var oneFeed = $allFeed[0].childNodes[2].childNodes;
-            if(oneFeed.length === 2){
-                pass = false;
-                if(oneFeed[1].value === ""){
-                    oneFeed[1].value = "The check for 'exactly equal' is ===. You need to use this in every statement. The only possible exception would be if you make the last statement an 'else' and not 'else if'."//"The check for 'exactly equal' is ===. You need to use this in every statement. The only possible exception would be if you make the last statement an 'else' and not 'else if'. ";
-                }
-            }
-
-            //fails for not using else
-            var oneFeed = $allFeed[1].childNodes[2].childNodes;
-            if(oneFeed.length === 2){
-                pass = false;
-                if(oneFeed[1].value === ""){
-                    oneFeed[1].value = "\"else (if)\" is an important tool for coders. It can make our jobs easier with less code to write, but more importantly it makes \"mutually exclusive conditions\". That means that you can never have more than one of the conditions be true when you test it. When your 'answer' is 1, it cannot also be 4. It is inefficient to keep checking other values as your program does without else. The requirement for \"at least two else\" means that you need at least three conditionals to pass, not that you should skip on \"else if\" when you have extra conditionals. If you have forgotten how to use else (which includes else if), and why, make sure to review the tutorials:\nhttps://www.khanacademy.org/computing/computer-programming/programming/logic-if-statements/pt/ifelse-part-2";
-                }
-            }
-
-            //fails for not making unique answer or values of answer aren't covered properly
-            var oneFeed = $allFeed[2].childNodes[2].childNodes;
-            if(oneFeed.length === 2){
-                console.log("failed");
-                pass = false;
-                var extras = $allFeed[2].childNodes[3].childNodes;
-
-                
-
-                if(oneFeed[1].value === ""){
-                    
-                    var used = false;
-                    
-                    //uses value of answer
-                    if(extras[1].childNodes[2].checked){
-                        
-                        oneFeed[1].value = "The problem here is that your program displays the number of the answer, it works, but you can achieve it in much simpler code: \n `text(floor(random(1, 5)), 200, 200);`\n This means that most of your code is unnecessary and a problem. Try setting answers like \"yes!\"";
-                        used = true;
-                    }
-
-                    //useless if
-                    if(extras[3].childNodes[2].checked){
-                        
-                        if(used){
-                            oneFeed[1].value += "\n\n";
-                        }
-                        used = true;
-
-                        oneFeed[1].value += "You must change the input to the random function so that all the texts have a fair chance of being displayed. Your conditionals do not quite fit the range of possible 'answer's. Can you figure out which of your expected 'answer'(s) are not in that range? ";
-                        if(!extras[5].childNodes[2].checked){
-                            oneFeed[1].value += "The article Random numbers just before this project explains both which numbers random(1, 5) can return, and also what floor will do to a number.";
-                        }
-                    }
-
-                    //no if for value
-                    if(extras[5].childNodes[2].checked){
-                        if(used){
-                            oneFeed[1].value += "\n\n";
-                        }
-                        
-                        used = true;
-                        oneFeed[1].value += "All possible values of 'answer' need to have its own text displaying. Which value(s) of 'answer' is/are missing in your project? The article Random numbers just before this project explains both which numbers random(1, 5) can return, and also what floor will do to a number."
-                    }
-                }
-            }
-
-            //uses floor(random())
-            var oneFeed = $allFeed[3].childNodes[2].childNodes;
-            if(oneFeed.length === 2){
-                pass = false;
-                if(oneFeed[1].value === ""){
-                    oneFeed[1].value = "You must show that you understand the `floor(random(min, max))` system as it is one of the few ways to generate a random whole number which will become vital if you continue coding. If you forgot how to do this, you should review the tutorials.";
-                }
-            }
-
-            //syntax error
-            var oneFeed = $allFeed[4].childNodes[2].childNodes;
-            if(oneFeed.length === 2){
-                pass = false;
-                if(oneFeed[1].value === ""){
-                    oneFeed[1].value = "If you ever need help, you can use the Request help button beneath your program. Just post a message explaining the issue there, following instructions in https://www.khanacademy.org/computing/computer-programming/programming/becoming-a-community-coder/a/ask-for-program-help ";
-                }
-            }
-
-            //plagiarism
-            var oneFeed = $allFeed[5].childNodes[2].childNodes;
-            if(oneFeed.length === 2){
-                pass = false;
-                if(oneFeed[1].value === ""){
-                    oneFeed[1].value = "Link:\nPlease don't plagiarize, it's a waste of time. You won't learn what you should, and I will be kept away from projects that deserve feedback. It is also rude to the author.";
-                }
-            }
-
-
+            requirementResponse();
+          
             //the following code adds stuff to the message
-            var extraCompliments = "";
+            extraCompliments = "";
             if(pass){
                 extraCompliments+= "Congratulations on completing "  + projectType + "! ";
             }
-            var extraSuggestions = "";
+            extraSuggestions = "";
 
-
-            //the following code adds stuff to the message depending on checkboxes
-            var checkBoxes = $("#feedback-generator-main-div input");
-
-            var compliments = 0;
-            var complimentsToDo = 0;
-            for(var i = 0; i < 4; i ++){
-                if(checkBoxes[i].checked){
-                    complimentsToDo ++;
-                }
-            }
-
-            //indents
-            if(checkBoxes[0].checked){
-                if(compliments === 0){
-                    extraCompliments += "I love ";
-                } else{
-                    if(complimentsToDo === 1){
-                        extraCompliments += ", and ";
-                    } else{
-                        extraCompliments += ", ";
-                    }
-                }
-                extraCompliments += " your use of indents"
-                var addOn = $("#indents-textArea")[0];
-                if(addOn.value.length > 0){
-                    extraCompliments += " on lines " + addOn.value;
-                }
-                compliments ++;
-                complimentsToDo --;
-            } else{
-                extraSuggestions += "\n\nCorrectly placed indents can make your code easier to read. Put an indent (one tab or two spaces) on every line between {} and your code will be tidier. Look to Pamela's code for examples!"
-            }
-
-            //documentation
-            if(checkBoxes[1].checked){
-                if(compliments === 0){
-                    extraCompliments += "I love ";
-                } else{
-                    if(complimentsToDo === 1){
-                        extraCompliments += ", and ";
-                    } else{
-                        extraCompliments += ", ";
-                    }
-                }
-                var addOn = $("#documentation-textArea")[0];
-                if(addOn.value.length === 0){
-                    extraCompliments += "that you used the documentation";
-                } else{
-                    extraCompliments += "that you used " + addOn.value + " from the documentation"
-                }
-                compliments ++;
-                complimentsToDo --;
-            } else{
-                extraSuggestions += "\n\nExperimentation is an important part of programming. At this point the Documentation tab under your coding window is your best friend. The text section contains other text functions, like textAlign, which can be used to center text.\nTip: introduce a line break in a text string with \\n (see an example in the textLeading() part of documentation)";
-            }
-
-            //comments
-            if(checkBoxes[2].checked){
-                if(compliments === 0){
-                    extraCompliments += "I love ";
-                } else{
-                    if(complimentsToDo === 1){
-                        extraCompliments += ", and ";
-                    } else{
-                        extraCompliments += ", ";
-                    }
-                }
-                extraCompliments += "your use of comments"
-                var addOn = $("#comments-textArea")[0];
-                if(addOn.value.length > 0){
-                    extraCompliments += " on lines " + addOn.value;
-                }
-                compliments ++;
-                complimentsToDo --;
-            } else{
-                extraSuggestions += "\n\n I really want you to start using comments like:\n```//generate random whole number between 1 and 4\nvar answer = floor(random(1, 5));```\nIt may be a bit silly for this project, but it is important to get in the habit. Later you will need comments when other coders are trying to help you or learn from you, and when you try to navigate code you made 1+ weeks ago."
-            }
-
+            compliments = 0;
             
-
-            //line breaks
-            if(checkBoxes[3].checked){
-                
-                if(compliments === 0){
-                    extraCompliments += "I love ";
-                } else{
-                    if(complimentsToDo === 1){
-                        extraCompliments += ", and ";
-                    } else{
-                        extraCompliments += ", ";
-                    }
-                }
-                extraCompliments += "your use of line breaks"
-                var addOn = $("#line_breaks-textArea")[0];
-                if(addOn.value.length > 0){
-                    extraCompliments += " on lines " + addOn.value;
-                }
-                compliments ++;
-                complimentsToDo --;
-            } else{
-                extraSuggestions += "\n\n I really want you to start using blank lines of code to split your code into more manageable chunks. Try it out and see what you think!"
-            }
+            critiqueResponse();
 
             $("#uid-discussion-input-1-content-input")[0].value = "Hi! I evaluated your project. If you have any questions, thoughts, want some advice, or want any projects evaluated, you can contact me here.";
 
@@ -320,292 +420,145 @@ var projects = {
                 finalFeed[finalFeed.length-1].value += "Nice job " + projectOwner + "! ";
             }
 
-            finalFeed[finalFeed.length-1].value += extraCompliments + "!" + extraSuggestions + "\n\nKeep up the hard work! - " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
-        },
-        appendHTML: function(){
-            
-            help = [];
+            if(compliments > 0){
+              extraCompliments += "!";
+            }
 
-            //unique answer check boxes
-            var div = $("<div>").addClass("feedback-generator-div").insertAfter($(".eval-peer-rubric-item")[2].childNodes[2]);
-
-            $("<h4>").text("Reason for fail (only fill out if failed)").css("margin", "2px").appendTo(div);
-
-
-            appendCheck(div, "answer-val", "the difference in the text is only the value of answer");
-
-            appendCheck(div, "no_if_message", "There is an if statement with a condition that is never true. ");
-            
-            appendCheck(div, "no_answer_message", "There is no if statement for a value of answer. ")
-            
-            $("<br>").insertAfter(div);
-
-
-            //checkboxes for general feedback
-
-            var div = appendMainDiv();
-
-            appendCheck(div.left, "indents", "They used indents", "The line of the indent(s) e.g. \"15 and 16\"");
-            appendCheck(div.left, "documentation", "They used something from documentation", "The function(s) the student used e.g. \"textAlign(CENTER, CENTER);\"");
-
-            appendCheck(div.right, "comments", "They used comments", "The line of the comment(s) e.g. \"15 and 16\"");
-            appendCheck(div.right, "line_breaks", "They've used blank lines to signal new code sections", "The line of the line break(s) e.g. \"15 and 16\"");
-
-
+            finalFeed[finalFeed.length-1].value += extraCompliments + extraSuggestions + "\n\nKeep up the hard work! - " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
         }
     },
     "Project: Build-a-House": {
-        generateFeedback: function(){
-            if($("._191y9x4m")[0] !== undefined){
-                var projectOwner = $("._191y9x4m")[0].innerText;
-            } else{
-                var projectOwner = $("._1g8isxy8")[0].innerText;
-            }
-            var evaluationAuthor = $("._wozql4")[0].innerText;
-            var projectType = $("._1g8isxy8")[0].innerText;
-            var pass = true;
-
-            var $allFeed = $(".eval-left ul div li");
-
-            /* 
-            This section of code goes through all of the pass/fail button <li>s and if it has 2 elements
-            it has the failed text box open and is a fail. We then set that text box to a response I have
-            come up with.
-            */
-
-            //draws something house-like
-            var oneFeed = $allFeed[0].childNodes[2].childNodes;
-            if(oneFeed.length === 2){
-                pass = false;
-                if(oneFeed[1].value === ""){
-                    oneFeed[1].value = "";
-                }
-            }
-
-            //Uses at least 2 loops to draw repeating parts of the drawing.
-            var oneFeed = $allFeed[1].childNodes[3].childNodes;
-            if(oneFeed.length === 2){
-                pass = false;
-                if(oneFeed[1].value === ""){
-                    oneFeed[1].value = "";
-                }
-            }
-
-            //syntax/logic
-            var oneFeed = $allFeed[2].childNodes[2].childNodes;
-            if(oneFeed.length === 2){
-                pass = false;
-                if(oneFeed[1].value === ""){
-                    oneFeed[1].value = "If you ever need help, you can find it in the help requests tab beneath your program. Just post a comment there, and you should get some good help within a day.";
-                }
-            }
-
-            //plagiarism
-            var oneFeed = $allFeed[3].childNodes[2].childNodes;
-            if(oneFeed.length === 2){
-                pass = false;
-                if(oneFeed[1].value === ""){
-                    oneFeed[1].value = "Link:\nPlease don't plagiarize, you will waste all of our time. You won't learn what you should, and I will be kept away from other projects that are actually proving something. Not to mention it is rude to te author.";
-                }
-            }
-
-
-            //the following code adds stuff to the message
-            var extraCompliments = "";
-            if(pass){
-                extraCompliments+= "Congratulations on completing "  + projectType + "! ";
-            }
-            var extraSuggestions = "";
-
-
-            //the following code adds stuff to the message depending on checkboxes
-            var checkBoxes = $("#feedback-generator-main-div input");
-
-            var compliments = 0;
-            var complimentsToDo = 0;
-            for(var i = 0; i < 4; i ++){
-                if(checkBoxes[i].checked){
-                    complimentsToDo ++;
-                }
-            }
-
-            //indents
-            if(checkBoxes[0].checked){
-                if(compliments === 0){
-                    extraCompliments += "I love ";
-                } else{
-                    if(complimentsToDo === 1){
-                        extraCompliments += ", and ";
-                    } else{
-                        extraCompliments += ", ";
-                    }
-                }
-                extraCompliments += " your use of indents"
-                var addOn = $("#indents-textArea")[0];
-                if(addOn.value.length > 0){
-                    extraCompliments += " on lines " + addOn.value;
-                }
-                compliments ++;
-                complimentsToDo --;
-            } else{
-                extraSuggestions += "\n\nIndents can really make your code easier to read. Put an indent on every line between {} or () or [], and you will find it looks much better, I suggest you look at Pamela's and other's code and mirror how they indent."
-            }
-
-            //documentation
-            if(checkBoxes[1].checked){
-                if(compliments === 0){
-                    extraCompliments += "I love ";
-                } else{
-                    if(complimentsToDo === 1){
-                        extraCompliments += ", and ";
-                    } else{
-                        extraCompliments += ", ";
-                    }
-                }
-                var addOn = $("#documentation-textArea")[0];
-                if(addOn.value.length === 0){
-                    extraCompliments += "that you used the documentation";
-                } else{
-                    extraCompliments += "that you used " + addOn.value + " from the documentation"
-                }
-                compliments ++;
-                complimentsToDo --;
-            } else{
-                extraSuggestions += "\n\nIt would have been great to have seen you go to the documentation and use something from there. Experimentation is a really big part of programming, and the more you experiment right now, the better you will be prepared for the future. On this project, it would have been very beneficial for you to have looked at image() and getImage(). image() is particularily important, it plays a key role in optimizing complex graphics used in games, so it is beneficial if you try usingit now."
-            }
-
-            //modulo
-            if(checkBoxes[2].checked){
-                if(compliments === 0){
-                    extraCompliments += "I love ";
-                } else{
-                    if(complimentsToDo === 1){
-                        extraCompliments += ", and ";
-                    } else{
-                        extraCompliments += ", ";
-                    }
-                }
-                extraCompliments += "your use of modulo"
-                var addOn = $("#images-modulo")[0];
-                if(addOn.value.length > 0){
-                    extraCompliments += " on lines " + addOn.value;
-                }
-                compliments ++;
-                complimentsToDo --;
-            } else{
-                extraSuggestions += "\n\nIt would have been wonderful to have seen you use modulo (%). It can make your job much easier and is worth learning and experimenting with.";
-            }
-                
-
-            //line breaks
-            if(checkBoxes[3].checked){
-                
-                if(compliments === 0){
-                    extraCompliments += "I love ";
-                } else{
-                    if(complimentsToDo === 1){
-                        extraCompliments += ", and ";
-                    } else{
-                        extraCompliments += ", ";
-                    }
-                }
-                extraCompliments += "your use of line breaks"
-                var addOn = $("#line_breaks-textArea")[0];
-                if(addOn.value.length > 0){
-                    extraCompliments += " on lines " + addOn.value;
-                }
-                compliments ++;
-                complimentsToDo --;
-            } else{
-                extraSuggestions += "\n\n I really want you to start using line breaks to split your code into more manageable chunks. A line break is simply an empty line of code, try it out and see what you think!"
-            }
-
-            //comments
-            if(checkBoxes[4].checked){
-                if(compliments === 0){
-                    extraCompliments += "I love ";
-                } else{
-                    if(complimentsToDo === 1){
-                        extraCompliments += ", and ";
-                    } else{
-                        extraCompliments += ", ";
-                    }
-                }
-                extraCompliments += "your use of comments"
-                var addOn = $("#comments-textArea")[0];
-                if(addOn.value.length > 0){
-                    extraCompliments += " on lines " + addOn.value;
-                }
-                compliments ++;
-                complimentsToDo --;
-            } else{
-                extraSuggestions += "\n\n I really want you to start using comments like:\n```//generate random whole number between 1 and 4\nvar answer = floor(random(1, 5));```\nIt may be a bit silly for this project, but it is important to get in the habit. Later you will need comments when other coders are trying to help you or learn from you, and when you try to navigate code you made 1+ weeks ago."
-            }
-
-
-
-
-            $("._qwk47qNaN")[0].value = "Hi! I evaluated your project. If you have any questions, thoughts, want some advice, or want any projects evaluated, you can contact me here.";
-
-            var finalFeed = $("textarea.discussion-text.eval-text");
-            finalFeed[finalFeed.length-1].value += "Nice Job " + projectOwner + "! " + extraCompliments + "!" + extraSuggestions + "\n\nKeep up the hard work! - " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
-        },
-        appendHTML: function(){
-
-            help = [];
-
-            //extra checkboxes for "used 2 loops to draw repeated parts of drawing"
-            var div = $("<div>").css("background-color", "rgb(220, 220, 255)").insertAfter($(".eval-peer-rubric-item")[1].childNodes[2]);
-
-            $("<h4>").text("Reason for fail (only fill out if failed)").css("margin", "2px").appendTo(div);
-
-            appendCheck(div, "not_enough_loops", "Not enough loops");
-            appendCheck(div, "no_display", "Loop(s) don't display anything");
-            appendCheck(div, "hidden_display", "Loop(s) don't display anything on the screen");
-            appendCheck(div, "one_display", "Loop(s) display one thing");
-            
-            $("<br>").insertAfter(div);
-
-
-            //checkboxes for general feedback
-
-            var div = appendMainDiv();
-
-            appendCheck(div.left, "indents", "they used indents", "The line of the indent(s) e.g. \"15 and 16\"");
-            appendCheck(div.left, "documentation", "They used something form documentation", "The function(s) the student used e.g. \"image(\"img\");\"");
-            appendCheck(div.left, "modulo", "They used modulo", "The line of the use e.g. \"15 and 16\"");
-
-            appendCheck(div.right, "comments", "They used comments", "The line of the comment(s) e.g. \"15 and 16\"");
-            appendCheck(div.right, "line-breaks", "they used line breaks", "The line of the line break(s) e.g. \"15 and 16\"");
-
-
+      generateFeedback: function(){
+        if($("._191y9x4m")[0] !== undefined){
+          var projectOwner = $("._191y9x4m")[0].innerText;
+        } else{
+            var projectOwner = $("._1g8isxy8")[0].innerText;
         }
+        var evaluationAuthor = $("._wozql4")[0].innerText;
+        projectType = $("._1g8isxy8")[0].innerText;
+        pass = true;
+
+        $allFeed = $(".eval-left ul div li");
+
+        requirementResponse();
+      
+        //the following code adds stuff to the message
+        extraCompliments = "";
+        if(pass){
+            extraCompliments+= "Congratulations on completing "  + projectType + "! ";
+        }
+        extraSuggestions = "";
+
+        compliments = 0;
+        
+        critiqueResponse();
+
+        $("#uid-discussion-input-1-content-input")[0].value = "Hi! I evaluated your project. If you have any questions, thoughts, want some advice, or want any projects evaluated, you can contact me here.";
+
+        var finalFeed = $("textarea.discussion-text.eval-text");
+
+        if(pass){
+            finalFeed[finalFeed.length-1].value += "Nice job " + projectOwner + "! ";
+        }
+
+        if(compliments > 0){
+          extraCompliments += "!";
+        }
+
+        finalFeed[finalFeed.length-1].value += extraCompliments + extraSuggestions + "\n\nKeep up the hard work! - " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
+          
+
+      }
     },
     "Project: Make it rain": {
-        generateFeedback: function(){
-            var projectOwner = $("._191y9x4m")[0].innerText;
-            var evaluationAuthor = $("._wozql4")[0].innerText;
-            var projectType = $("._1g8isxy8")[0].innerText;
-            $("textarea.discussion-text.eval-text")[0].value += "Nice Job " + projectOwner + "! " + "Congratulations on completing " + projectType + "!\n-_ " + evaluationAuthor + " (with help of Auto Feedback Generator Extension_";
-
-        },
-        appendHTML: function(){
-            
+      generateFeedback: function(){
+        if($("._191y9x4m")[0] !== undefined){
+          var projectOwner = $("._191y9x4m")[0].innerText;
+        } else{
+            var projectOwner = $("._1g8isxy8")[0].innerText;
         }
+        var evaluationAuthor = $("._wozql4")[0].innerText;
+        projectType = $("._1g8isxy8")[0].innerText;
+        pass = true;
+
+        $allFeed = $(".eval-left ul div li");
+
+        requirementResponse();
+      
+        //the following code adds stuff to the message
+        extraCompliments = "";
+        if(pass){
+            extraCompliments+= "Congratulations on completing "  + projectType + "! ";
+        }
+        extraSuggestions = "";
+
+        compliments = 0;
+        
+        critiqueResponse();
+
+        $("#uid-discussion-input-1-content-input")[0].value = "Hi! I evaluated your project. If you have any questions, thoughts, want some advice, or want any projects evaluated, you can contact me here.";
+
+        var finalFeed = $("textarea.discussion-text.eval-text");
+
+        if(pass){
+            finalFeed[finalFeed.length-1].value += "Nice job " + projectOwner + "! ";
+        }
+
+        if(compliments > 0){
+          extraCompliments += "!";
+        }
+
+        finalFeed[finalFeed.length-1].value += extraCompliments + extraSuggestions + "\n\nKeep up the hard work! - " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
+          
+
+      }
     },
     "Project: Bookshelf": {
         generateFeedback: function(){
+          if($("._191y9x4m")[0] !== undefined){
             var projectOwner = $("._191y9x4m")[0].innerText;
-            var evaluationAuthor = $("._wozql4")[0].innerText;
-            var projectType = $("._1g8isxy8")[0].innerText;
-            $("textarea.discussion-text.eval-text")[0].value += "Nice Job " + projectOwner + "! " + "Congratulations on completing " + projectType + "!\n-_ " + evaluationAuthor + " (with help of Auto Feedback Generator Extension_";
+        } else{
+            var projectOwner = $("._1g8isxy8")[0].innerText;
+        }
+        var evaluationAuthor = $("._wozql4")[0].innerText;
+        projectType = $("._1g8isxy8")[0].innerText;
+        pass = true;
 
-        },
-        appendHTML: function(){
+        $allFeed = $(".eval-left ul div li");
+
+        requirementResponse();
+      
+        //the following code adds stuff to the message
+        extraCompliments = "";
+        if(pass){
+            extraCompliments+= "Congratulations on completing "  + projectType + "! ";
+        }
+        extraSuggestions = "";
+
+        compliments = 0;
+        
+        critiqueResponse();
+
+        $("#uid-discussion-input-1-content-input")[0].value = "Hi! I evaluated your project. If you have any questions, thoughts, want some advice, or want any projects evaluated, you can contact me here.";
+
+        var finalFeed = $("textarea.discussion-text.eval-text");
+
+        if(pass){
+            finalFeed[finalFeed.length-1].value += "Nice job " + projectOwner + "! ";
+        }
+
+        if(compliments > 0){
+          extraCompliments += "!";
+        }
+
+        finalFeed[finalFeed.length-1].value += extraCompliments + extraSuggestions + "\n\nKeep up the hard work! - " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
             
+
         }
     }
 };
+
+
 
 //when page loaded
 $(window).on("load", function(){
@@ -635,13 +588,7 @@ $(window).on("load", function(){
                     if(item.showFeedback){
                         var projectType = $("._1g8isxy8")[0].innerText;
 
-
-                        //append styling for the additions
-                        //$("<style>").html(CSS).appendTo("head");
-
-                        
-
-                        projects[projectType].appendHTML();
+                        appendHTML();
 
                         //help button reactions
                         for(var i = 0; i < help.length; i ++){
