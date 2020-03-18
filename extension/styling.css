@@ -5,11 +5,14 @@
 }
 #left-feedback-checkboxes{
     /*border:1px solid black;*/
-    width: 50%;
+    width: 45%;
+    margin: 2%;
     float:left;
 }
 #right-feedback-checkboxes{
     /*border:1px solid black;*/
+    width: 45%;
+    margin: 2%;
     float:left;
 }
 .clear{
@@ -31,7 +34,7 @@ clear:auto;
     position: absolute;
     width: 350px;
     height: 180px;
-    padding: 0px;
+    padding: 10px;
     background: #CF5858;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
