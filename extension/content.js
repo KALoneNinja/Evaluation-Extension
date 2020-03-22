@@ -120,7 +120,14 @@ var requirementResponse = function(){
             var spot = i2 * 2 + 1;
 
             // adds to message if checked
-            if(extras[spot].childNodes[2].checked){
+            var d = extras[spot].childNodes;
+            var ind;
+            if(d.length === 2 || d.length === 3){
+              ind = 0;
+            } else{
+              ind = 2;
+            }
+            if(d[ind].checked){
 
               // if previous messages used: 
               if(used){
@@ -139,7 +146,14 @@ var requirementResponse = function(){
               }
 
               if(reqs[i][i2].exclusions){
-                if(!extras[reqs[i][i2].exclusions.excludeIf *2 + 1].childNodes[2].checked){
+                var d = extras[reqs[i][i2].exclusions.excludeIf *2 + 1].childNodes;
+                var ind;
+                if(d.length === 2 || d.length === 3){
+                  ind = 0;
+                } else{
+                  ind = 2;
+                }
+                if(!d[ind].checked){
                   oneFeed[1].value += reqs[i][i2].exclusions.messages[Math.floor(random(reqs[i][i2].exclusions.messages.length))]
                 }
               }
