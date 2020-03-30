@@ -273,13 +273,18 @@ var appendHTML = function(){
 var projects = {
     "Project: What's For Dinner": {
       generateFeedback: function(){
+        projectType = $("._1g8isxy8")[0];
+        if(!projectType){
+          alert("Error! You must be in the about section.");
+          return;
+        }
+        projectType = projectType.innerText;
         if($("._191y9x4m")[0] !== undefined){
           var projectOwner = $("._191y9x4m")[0].innerText;
         } else{
             var projectOwner = $("._1g8isxy8")[0].innerText;
         }
         var evaluationAuthor = $("._wozql4")[0].innerText;
-        projectType = $("._1g8isxy8")[0].innerText;
         pass = true;
 
         $allFeed = $(".eval-left ul div li");
@@ -316,13 +321,18 @@ var projects = {
     },
     "Project: Ad Design": {
       generateFeedback: function(){
+        projectType = $("._1g8isxy8")[0];
+        if(!projectType){
+          alert("Error! You must be in the about section.");
+          return;
+        }
+        projectType = projectType.innerText;
         if($("._191y9x4m")[0] !== undefined){
           var projectOwner = $("._191y9x4m")[0].innerText;
         } else{
             var projectOwner = $("._1g8isxy8")[0].innerText;
         }
         var evaluationAuthor = $("._wozql4")[0].innerText;
-        projectType = $("._1g8isxy8")[0].innerText;
         pass = true;
 
         $allFeed = $(".eval-left ul div li");
@@ -359,13 +369,18 @@ var projects = {
     },
     "Project: Fish Tank": {
       generateFeedback: function(){
+        projectType = $("._1g8isxy8")[0];
+        if(!projectType){
+          alert("Error! You must be in the about section.");
+          return;
+        }
+        projectType = projectType.innerText;
         if($("._191y9x4m")[0] !== undefined){
           var projectOwner = $("._191y9x4m")[0].innerText;
         } else{
             var projectOwner = $("._1g8isxy8")[0].innerText;
         }
         var evaluationAuthor = $("._wozql4")[0].innerText;
-        projectType = $("._1g8isxy8")[0].innerText;
         pass = true;
 
         $allFeed = $(".eval-left ul div li");
@@ -402,13 +417,18 @@ var projects = {
     },
     "Project: Magic 8-Ball": {
         generateFeedback: function(){
+          projectType = $("._1g8isxy8")[0];
+          if(!projectType){
+            alert("Error! You must be in the about section.");
+            return;
+          }
+          projectType = projectType.innerText;
             if($("._191y9x4m")[0] !== undefined){
                 var projectOwner = $("._191y9x4m")[0].innerText;
             } else{
                 var projectOwner = $("._1g8isxy8")[0].innerText;
             }
             var evaluationAuthor = $("._wozql4")[0].innerText;
-            projectType = $("._1g8isxy8")[0].innerText;
             pass = true;
 
             $allFeed = $(".eval-left ul div li");
@@ -443,13 +463,18 @@ var projects = {
     },
     "Project: Build-a-House": {
       generateFeedback: function(){
+        projectType = $("._1g8isxy8")[0];
+        if(!projectType){
+          alert("Error! You must be in the about section.");
+          return;
+        }
+        projectType = projectType.innerText;
         if($("._191y9x4m")[0] !== undefined){
           var projectOwner = $("._191y9x4m")[0].innerText;
         } else{
             var projectOwner = $("._1g8isxy8")[0].innerText;
         }
         var evaluationAuthor = $("._wozql4")[0].innerText;
-        projectType = $("._1g8isxy8")[0].innerText;
         pass = true;
 
         $allFeed = $(".eval-left ul div li");
@@ -486,13 +511,18 @@ var projects = {
     },
     "Project: Make it rain": {
       generateFeedback: function(){
+        projectType = $("._1g8isxy8")[0];
+        if(!projectType){
+          alert("Error! You must be in the about section.");
+          return;
+        }
+        projectType = projectType.innerText;
         if($("._191y9x4m")[0] !== undefined){
           var projectOwner = $("._191y9x4m")[0].innerText;
         } else{
             var projectOwner = $("._1g8isxy8")[0].innerText;
         }
         var evaluationAuthor = $("._wozql4")[0].innerText;
-        projectType = $("._1g8isxy8")[0].innerText;
         pass = true;
 
         $allFeed = $(".eval-left ul div li");
@@ -529,13 +559,18 @@ var projects = {
     },
     "Project: Bookshelf": {
         generateFeedback: function(){
+          projectType = $("._1g8isxy8")[0];
+        if(!projectType){
+          alert("Error! You must be in the about section.");
+          return;
+        }
+        projectType = projectType.innerText;
           if($("._191y9x4m")[0] !== undefined){
             var projectOwner = $("._191y9x4m")[0].innerText;
         } else{
             var projectOwner = $("._1g8isxy8")[0].innerText;
         }
         var evaluationAuthor = $("._wozql4")[0].innerText;
-        projectType = $("._1g8isxy8")[0].innerText;
         pass = true;
 
         $allFeed = $(".eval-left ul div li");
@@ -600,7 +635,12 @@ $(window).on("load", function(){
 
                 chrome.storage.sync.get(["showFeedback"], function(item){
                     if(item.showFeedback){
-                        var projectType = $("._1g8isxy8")[0].innerText;
+                        var projectType = $("._1g8isxy8")[0];
+                        if(!projectType){
+                          alert("Error! You must be in the about section.");
+                          return;
+                        }
+                        projectType = projectType.innerText;
 
                         appendHTML();
 
