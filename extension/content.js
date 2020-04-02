@@ -70,6 +70,9 @@ var $allFeed, pass, projectType, compliments, extraCompliments, extraSuggestions
 // note: needs $allFeed, pass and projectType declared beforehand
 var requirementResponse = function(){
 
+var fails = 0;
+var total = 0;
+
   if(!projectReplies[projectType]){
     return;
   }
@@ -86,9 +89,10 @@ var requirementResponse = function(){
     //console.log(projectType);
 
     
-
+    total++;
     // if failed
     if(oneFeed.length === 2){
+      fails++;
       pass = false;
 
       // if not yet provided feedback
@@ -165,6 +169,7 @@ var requirementResponse = function(){
       }
     }
   }
+  return total - fails;
 }
 
 // goes through all of the critique check boxes and adds to response
@@ -175,13 +180,20 @@ var critiqueResponse = function(){
     return;
   }
 
+  var unchecked =  0;
+  var total = 0;
+
   //the following code adds stuff to the message depending on checkboxes
   var checkBoxes = $("#feedback-generator-main-div input");
             
   var complimentsToDo = 0;
   for(var i = 0; i < checkBoxes.length; i ++){
+    total ++;
       if(checkBoxes[i].checked){
+        
           complimentsToDo ++;
+      } else{
+        unchecked ++;
       }
   }
 
@@ -220,6 +232,7 @@ var critiqueResponse = function(){
     }
     
   }
+  return total - unchecked;
 }
 
 // appends all of the check boxes, titles, help boxes, everything
@@ -289,7 +302,7 @@ var projects = {
 
         $allFeed = $(".eval-left ul div li");
 
-        requirementResponse();
+        var qualScore = requirementResponse();
       
         //the following code adds stuff to the message
         extraCompliments = "";
@@ -300,7 +313,7 @@ var projects = {
 
         compliments = 0;
         
-        critiqueResponse();
+        qualScore += critiqueResponse();
 
         $("#uid-discussion-input-1-content-input")[0].value = "Hi! I evaluated your project. If you have any questions, thoughts, want some advice, or want any projects evaluated, you can contact me here.";
 
@@ -313,8 +326,19 @@ var projects = {
         if(compliments > 0){
           extraCompliments += "!";
         }
+        
+        if(qualScore >= 5 || qualScore === NaN){
+          if(extraSuggetsions !== "" && compliments !== 0){
+            extraCompliments += "\n\n";
+          }
+          finalFeed[finalFeed.length-1].value += extraCompliments + extraSuggestions + "Keep up the hard work! - " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
+        } else{
+          if(compliments !== 0){
+            extraCompliments += "\n\n";
+          }
 
-        finalFeed[finalFeed.length-1].value += extraCompliments + extraSuggestions + "\n\nKeep up the hard work! - " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
+          finalFeed[finalFeed.length-1].value += extraCompliments + "Please do not submit a project when it clearly won't pass. It not only wastes both of our time, but it also wastes all other student's time as well. So again, please make sure it will pass before submitting. If you need help, you can find it in the help requests tab beneath your program.\n\n- Don't give up! " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
+        }
           
 
       }
@@ -337,7 +361,7 @@ var projects = {
 
         $allFeed = $(".eval-left ul div li");
 
-        requirementResponse();
+        var qualScore = requirementResponse();
       
         //the following code adds stuff to the message
         extraCompliments = "";
@@ -348,7 +372,7 @@ var projects = {
 
         compliments = 0;
         
-        critiqueResponse();
+        qualScore += critiqueResponse();
 
         $("#uid-discussion-input-1-content-input")[0].value = "Hi! I evaluated your project. If you have any questions, thoughts, want some advice, or want any projects evaluated, you can contact me here.";
 
@@ -361,8 +385,19 @@ var projects = {
         if(compliments > 0){
           extraCompliments += "!";
         }
+        
+        if(qualScore >= 5 || qualScore === NaN){
+          if(extraSuggetsions !== "" && compliments !== 0){
+            extraCompliments += "\n\n";
+          }
+          finalFeed[finalFeed.length-1].value += extraCompliments + extraSuggestions + "Keep up the hard work! - " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
+        } else{
+          if(compliments !== 0){
+            extraCompliments += "\n\n";
+          }
 
-        finalFeed[finalFeed.length-1].value += extraCompliments + extraSuggestions + "\n\nKeep up the hard work! - " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
+          finalFeed[finalFeed.length-1].value += extraCompliments + "Please do not submit a project when it clearly won't pass. It not only wastes both of our time, but it also wastes all other student's time as well. So again, please make sure it will pass before submitting. If you need help, you can find it in the help requests tab beneath your program.\n\n- Don't give up! " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
+        }
           
 
       }
@@ -385,7 +420,7 @@ var projects = {
 
         $allFeed = $(".eval-left ul div li");
 
-        requirementResponse();
+        var qualScore = requirementResponse();
       
         //the following code adds stuff to the message
         extraCompliments = "";
@@ -396,7 +431,7 @@ var projects = {
 
         compliments = 0;
         
-        critiqueResponse();
+        qualScore += critiqueResponse();
 
         $("#uid-discussion-input-1-content-input")[0].value = "Hi! I evaluated your project. If you have any questions, thoughts, want some advice, or want any projects evaluated, you can contact me here.";
 
@@ -409,57 +444,77 @@ var projects = {
         if(compliments > 0){
           extraCompliments += "!";
         }
+        
+        if(qualScore >= 5 || qualScore === NaN){
+          if(extraSuggetsions !== "" && compliments !== 0){
+            extraCompliments += "\n\n";
+          }
+          finalFeed[finalFeed.length-1].value += extraCompliments + extraSuggestions + "Keep up the hard work! - " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
+        } else{
+          if(compliments !== 0){
+            extraCompliments += "\n\n";
+          }
 
-        finalFeed[finalFeed.length-1].value += extraCompliments + extraSuggestions + "\n\nKeep up the hard work! - " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
-          
-
+          finalFeed[finalFeed.length-1].value += extraCompliments + "Please do not submit a project when it clearly won't pass. It not only wastes both of our time, but it also wastes all other student's time as well. So again, please make sure it will pass before submitting. If you need help, you can find it in the help requests tab beneath your program.\n\n- Don't give up! " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
+        }
       }
     },
     "Project: Magic 8-Ball": {
-        generateFeedback: function(){
-          projectType = $("._1g8isxy8")[0];
-          if(!projectType){
-            alert("Error! You must be in the about section.");
-            return;
-          }
-          projectType = projectType.innerText;
-            if($("._191y9x4m")[0] !== undefined){
-                var projectOwner = $("._191y9x4m")[0].innerText;
-            } else{
-                var projectOwner = $("._1g8isxy8")[0].innerText;
-            }
-            var evaluationAuthor = $("._wozql4")[0].innerText;
-            pass = true;
-
-            $allFeed = $(".eval-left ul div li");
-
-            requirementResponse();
-          
-            //the following code adds stuff to the message
-            extraCompliments = "";
-            if(pass){
-                extraCompliments+= "Congratulations on completing "  + projectType + "! ";
-            }
-            extraSuggestions = "";
-
-            compliments = 0;
-            
-            critiqueResponse();
-
-            $("#uid-discussion-input-1-content-input")[0].value = "Hi! I evaluated your project. If you have any questions, thoughts, want some advice, or want any projects evaluated, you can contact me here.";
-
-            var finalFeed = $("textarea.discussion-text.eval-text");
-
-            if(pass){
-                finalFeed[finalFeed.length-1].value += "Nice job " + projectOwner + "! ";
-            }
-
-            if(compliments > 0){
-              extraCompliments += "!";
-            }
-
-            finalFeed[finalFeed.length-1].value += extraCompliments + extraSuggestions + "\n\nKeep up the hard work! - " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
+      generateFeedback: function(){
+        projectType = $("._1g8isxy8")[0];
+        if(!projectType){
+          alert("Error! You must be in the about section.");
+          return;
         }
+        projectType = projectType.innerText;
+        if($("._191y9x4m")[0] !== undefined){
+          var projectOwner = $("._191y9x4m")[0].innerText;
+        } else{
+            var projectOwner = $("._1g8isxy8")[0].innerText;
+        }
+        var evaluationAuthor = $("._wozql4")[0].innerText;
+        pass = true;
+
+        $allFeed = $(".eval-left ul div li");
+
+        var qualScore = requirementResponse();
+      
+        //the following code adds stuff to the message
+        extraCompliments = "";
+        if(pass){
+            extraCompliments+= "Congratulations on completing "  + projectType + "! ";
+        }
+        extraSuggestions = "";
+
+        compliments = 0;
+        
+        qualScore += critiqueResponse();
+
+        $("#uid-discussion-input-1-content-input")[0].value = "Hi! I evaluated your project. If you have any questions, thoughts, want some advice, or want any projects evaluated, you can contact me here.";
+
+        var finalFeed = $("textarea.discussion-text.eval-text");
+
+        if(pass){
+            finalFeed[finalFeed.length-1].value += "Nice job " + projectOwner + "! ";
+        }
+
+        if(compliments > 0){
+          extraCompliments += "!";
+        }
+        
+        if(qualScore >= 5 || qualScore === NaN){
+          if(extraSuggetsions !== "" && compliments !== 0){
+            extraCompliments += "\n\n";
+          }
+          finalFeed[finalFeed.length-1].value += extraCompliments + extraSuggestions + "Keep up the hard work! - " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
+        } else{
+          if(compliments !== 0){
+            extraCompliments += "\n\n";
+          }
+
+          finalFeed[finalFeed.length-1].value += extraCompliments + "Please do not submit a project when it clearly won't pass. It not only wastes both of our time, but it also wastes all other student's time as well. So again, please make sure it will pass before submitting. If you need help, you can find it in the help requests tab beneath your program.\n\n- Don't give up! " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
+        }
+      }
     },
     "Project: Build-a-House": {
       generateFeedback: function(){
@@ -479,7 +534,7 @@ var projects = {
 
         $allFeed = $(".eval-left ul div li");
 
-        requirementResponse();
+        var qualScore = requirementResponse();
       
         //the following code adds stuff to the message
         extraCompliments = "";
@@ -490,7 +545,7 @@ var projects = {
 
         compliments = 0;
         
-        critiqueResponse();
+        qualScore += critiqueResponse();
 
         $("#uid-discussion-input-1-content-input")[0].value = "Hi! I evaluated your project. If you have any questions, thoughts, want some advice, or want any projects evaluated, you can contact me here.";
 
@@ -503,10 +558,19 @@ var projects = {
         if(compliments > 0){
           extraCompliments += "!";
         }
+        
+        if(qualScore >= 5 || qualScore === NaN){
+          if(extraSuggetsions !== "" && compliments !== 0){
+            extraCompliments += "\n\n";
+          }
+          finalFeed[finalFeed.length-1].value += extraCompliments + extraSuggestions + "Keep up the hard work! - " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
+        } else{
+          if(compliments !== 0){
+            extraCompliments += "\n\n";
+          }
 
-        finalFeed[finalFeed.length-1].value += extraCompliments + extraSuggestions + "\n\nKeep up the hard work! - " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
-          
-
+          finalFeed[finalFeed.length-1].value += extraCompliments + "Please do not submit a project when it clearly won't pass. It not only wastes both of our time, but it also wastes all other student's time as well. So again, please make sure it will pass before submitting. If you need help, you can find it in the help requests tab beneath your program.\n\n- Don't give up! " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
+        }
       }
     },
     "Project: Make it rain": {
@@ -527,7 +591,7 @@ var projects = {
 
         $allFeed = $(".eval-left ul div li");
 
-        requirementResponse();
+        var qualScore = requirementResponse();
       
         //the following code adds stuff to the message
         extraCompliments = "";
@@ -538,7 +602,7 @@ var projects = {
 
         compliments = 0;
         
-        critiqueResponse();
+        qualScore += critiqueResponse();
 
         $("#uid-discussion-input-1-content-input")[0].value = "Hi! I evaluated your project. If you have any questions, thoughts, want some advice, or want any projects evaluated, you can contact me here.";
 
@@ -551,10 +615,19 @@ var projects = {
         if(compliments > 0){
           extraCompliments += "!";
         }
+        
+        if(qualScore >= 5 || qualScore === NaN){
+          if(extraSuggetsions !== "" && compliments !== 0){
+            extraCompliments += "\n\n";
+          }
+          finalFeed[finalFeed.length-1].value += extraCompliments + extraSuggestions + "Keep up the hard work! - " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
+        } else{
+          if(compliments !== 0){
+            extraCompliments += "\n\n";
+          }
 
-        finalFeed[finalFeed.length-1].value += extraCompliments + extraSuggestions + "\n\nKeep up the hard work! - " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
-          
-
+          finalFeed[finalFeed.length-1].value += extraCompliments + "Please do not submit a project when it clearly won't pass. It not only wastes both of our time, but it also wastes all other student's time as well. So again, please make sure it will pass before submitting. If you need help, you can find it in the help requests tab beneath your program.\n\n- Don't give up! " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
+        }
       }
     },
     "Project: Bookshelf": {
@@ -565,8 +638,8 @@ var projects = {
           return;
         }
         projectType = projectType.innerText;
-          if($("._191y9x4m")[0] !== undefined){
-            var projectOwner = $("._191y9x4m")[0].innerText;
+        if($("._191y9x4m")[0] !== undefined){
+          var projectOwner = $("._191y9x4m")[0].innerText;
         } else{
             var projectOwner = $("._1g8isxy8")[0].innerText;
         }
@@ -575,7 +648,7 @@ var projects = {
 
         $allFeed = $(".eval-left ul div li");
 
-        requirementResponse();
+        var qualScore = requirementResponse();
       
         //the following code adds stuff to the message
         extraCompliments = "";
@@ -586,7 +659,7 @@ var projects = {
 
         compliments = 0;
         
-        critiqueResponse();
+        qualScore += critiqueResponse();
 
         $("#uid-discussion-input-1-content-input")[0].value = "Hi! I evaluated your project. If you have any questions, thoughts, want some advice, or want any projects evaluated, you can contact me here.";
 
@@ -599,12 +672,23 @@ var projects = {
         if(compliments > 0){
           extraCompliments += "!";
         }
+        
+        if(qualScore >= 5 || qualScore === NaN){
+          if(extraSuggetsions !== "" && compliments !== 0){
+            extraCompliments += "\n\n";
+          }
+          finalFeed[finalFeed.length-1].value += extraCompliments + extraSuggestions + "Keep up the hard work! - " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
+        } else{
+          if(compliments !== 0){
+            extraCompliments += "\n\n";
+          }
 
-        finalFeed[finalFeed.length-1].value += extraCompliments + extraSuggestions + "\n\nKeep up the hard work! - " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
+          finalFeed[finalFeed.length-1].value += extraCompliments + "Please do not submit a project when it clearly won't pass. It not only wastes both of our time, but it also wastes all other student's time as well. So again, please make sure it will pass before submitting. If you need help, you can find it in the help requests tab beneath your program.\n\n- Don't give up! " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
+        }
             
 
-        }
     }
+  }
 };
 
 
