@@ -149,7 +149,7 @@ var BH = {
         unselected: {
           "no_add-ons": { 
             messages: [
-              "\n\nIt would have been great to have seen you go to the documentation and use something from there. Experimentation is a really big part of programming, and the more you experiment right now, the better you will be prepared for the future. On this project, it would have been very beneficial for you to have looked at image() and getImage(). image() is particularily important, it plays a key role in optimizing complex graphics used in games, so it is beneficial if you try usingit now."
+              "It would have been great to have seen you go to the documentation and use something from there. Experimentation is a really big part of programming, and the more you experiment right now, the better you will be prepared for the future. On this project, it would have been very beneficial for you to have looked at image() and getImage(). image() is particularily important, it plays a key role in optimizing complex graphics used in games, so it is beneficial if you try usingit now."
             ]
           }  
         }
@@ -179,7 +179,7 @@ var BH = {
         unselected: {
           "no_add-ons": { 
             messages: [
-              "\n\n I really want you to start using comments like:\n```// draw window```\nIt is important to get in the habit. Later you will need comments when other coders are trying to help you or learn from you, and when you try to navigate code you made 1+ weeks ago."
+              "I really want you to start using comments like:\n```// draw window```\nIt is important to get in the habit. Later you will need comments when other coders are trying to help you or learn from you, and when you try to navigate code you made 1+ weeks ago."
             ]
           }  
         }
@@ -209,7 +209,7 @@ var BH = {
         unselected: {
           "no_add-ons": { 
             messages: [
-              "\n\n I really want you to start using blank lines of code to split your code into more manageable chunks. Try it out and see what you think!"
+              "I really want you to start using blank lines of code to split your code into more manageable chunks. Try it out and see what you think!"
             ]
           }  
         }
@@ -240,7 +240,7 @@ var BH = {
         unselected: {
           "no_add-ons": {
             messages: [
-              "\n\nIt would have been wonderful to have seen you use modulo (%). It can make your job much easier and is worth learning and experimenting with."
+              "It would have been wonderful to have seen you use modulo (%). It can make your job much easier and is worth learning and experimenting with."
             ]
           }
         }
