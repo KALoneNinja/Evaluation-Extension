@@ -328,7 +328,7 @@ var projects = {
         }
         
         if(qualScore >= 5 || qualScore === NaN){
-          if(extraSuggetsions !== "" && compliments !== 0){
+          if(extraSuggestions !== "" && compliments !== 0){
             extraCompliments += "\n\n";
           }
           finalFeed[finalFeed.length-1].value += extraCompliments + extraSuggestions + "Keep up the hard work! - " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
@@ -387,7 +387,7 @@ var projects = {
         }
         
         if(qualScore >= 5 || qualScore === NaN){
-          if(extraSuggetsions !== "" && compliments !== 0){
+          if(extraSuggestions !== "" && compliments !== 0){
             extraCompliments += "\n\n";
           }
           finalFeed[finalFeed.length-1].value += extraCompliments + extraSuggestions + "Keep up the hard work! - " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
@@ -446,7 +446,7 @@ var projects = {
         }
         
         if(qualScore >= 5 || qualScore === NaN){
-          if(extraSuggetsions !== "" && compliments !== 0){
+          if(extraSuggestions !== "" && compliments !== 0){
             extraCompliments += "\n\n";
           }
           finalFeed[finalFeed.length-1].value += extraCompliments + extraSuggestions + "Keep up the hard work! - " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
@@ -503,7 +503,7 @@ var projects = {
         }
         
         if(qualScore >= 5 || qualScore === NaN){
-          if(extraSuggetsions !== "" && compliments !== 0){
+          if(extraSuggestions !== "" && compliments !== 0){
             extraCompliments += "\n\n";
           }
           finalFeed[finalFeed.length-1].value += extraCompliments + extraSuggestions + "Keep up the hard work! - " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
@@ -560,7 +560,7 @@ var projects = {
         }
         
         if(qualScore >= 5 || qualScore === NaN){
-          if(extraSuggetsions !== "" && compliments !== 0){
+          if(extraSuggestions !== "" && compliments !== 0){
             extraCompliments += "\n\n";
           }
           finalFeed[finalFeed.length-1].value += extraCompliments + extraSuggestions + "Keep up the hard work! - " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
@@ -617,7 +617,7 @@ var projects = {
         }
         
         if(qualScore >= 5 || qualScore === NaN){
-          if(extraSuggetsions !== "" && compliments !== 0){
+          if(extraSuggestions !== "" && compliments !== 0){
             extraCompliments += "\n\n";
           }
           finalFeed[finalFeed.length-1].value += extraCompliments + extraSuggestions + "Keep up the hard work! - " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
@@ -674,7 +674,7 @@ var projects = {
         }
         
         if(qualScore >= 5 || qualScore === NaN){
-          if(extraSuggetsions !== "" && compliments !== 0){
+          if(extraSuggestions !== "" && compliments !== 0){
             extraCompliments += "\n\n";
           }
           finalFeed[finalFeed.length-1].value += extraCompliments + extraSuggestions + "Keep up the hard work! - " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
