@@ -135,7 +135,7 @@ var M8B = {
         unselected: {
           "no_add-ons": { 
             messages: [
-              "\n\nCorrectly placed indents can make your code easier to read. Put an indent (one tab or two spaces) on every line between {} and your code will be tidier. Look to Pamela's code for examples!"
+              "Correctly placed indents can make your code easier to read. Put an indent (one tab or two spaces) on every line between {} and your code will be tidier. Look to Pamela's code for examples!"
             ]
           }  
         }
@@ -167,7 +167,7 @@ var M8B = {
         unselected: {
           "no_add-ons": { 
             messages: [
-              "\n\nExperimentation is an important part of programming. At this point the Documentation tab under your coding window is your best friend. The text section contains other text functions, like textAlign, which can be used to center text.\nTip: introduce a line break in a text string with \\n (see an example in the textLeading() part of documentation)"
+              "Experimentation is an important part of programming. At this point the Documentation tab under your coding window is your best friend. The text section contains other text functions, like textAlign, which can be used to center text.\nTip: introduce a line break in a text string with \\n (see an example in the textLeading() part of documentation)"
             ]
           }  
         }
@@ -197,7 +197,7 @@ var M8B = {
         unselected: {
           "no_add-ons": { 
             messages: [
-              "\n\n I really want you to start using comments like:\n```//generate random whole number between 1 and 4\nvar answer = floor(random(1, 5));```\nIt may be a bit silly for this project, but it is important to get in the habit. Later you will need comments when other coders are trying to help you or learn from you, and when you try to navigate code you made 1+ weeks ago."
+              "I really want you to start using comments like:\n```//generate random whole number between 1 and 4\nvar answer = floor(random(1, 5));```\nIt may be a bit silly for this project, but it is important to get in the habit. Later you will need comments when other coders are trying to help you or learn from you, and when you try to navigate code you made 1+ weeks ago."
             ]
           }  
         }
@@ -227,7 +227,7 @@ var M8B = {
         unselected: {
           "no_add-ons": { 
             messages: [
-              "\n\n I really want you to start using blank lines of code to split your code into more manageable chunks. Try it out and see what you think!"
+              "I really want you to start using blank lines of code to split your code into more manageable chunks. Try it out and see what you think!"
             ]
           }  
         }
