@@ -16,7 +16,7 @@ var M8B = {
       {
         "no_add-ons": { 
           messages: [
-            "\"else (if)\" is an important tool for coders. It can make our jobs easier with less code to write, but more importantly it makes \"mutually exclusive conditions\". That means that you can never have more than one of the conditions be true when you test it. When your 'answer' is 1, it cannot also be 4. It is inefficient to keep checking other values as your program does without else. The requirement for \"at least two else\" means that you need at least three conditionals to pass, not that you should skip on \"else if\" when you have extra conditionals. If you have forgotten how to use else (which includes else if), and why, make sure to review the tutorials:\nhttps://www.khanacademy.org/computing/computer-programming/programming/logic-if-statements/pt/ifelse-part-2"
+            "Perhaps you are unsure of what 'mutually exclusive conditions' means? It means that you can never have more than one of the conditions be true when you test it. When your 'answer' is 1, it cannot also be 4. It is inefficient to keep checking other values as your program does. If you have forgotten how to use else (which includes else if), and why, make sure to review the tutorials. The requirement for \"at least two else\" means that you need at least three conditionals to pass, not that you should skip on \"else if\" when you have extra conditionals."
           ]
         }
       },
@@ -44,7 +44,7 @@ var M8B = {
   
           "no_add-ons": { 
             messages: [
-              "You must change the input to the random function so that all the texts have a fair chance of being displayed. Your conditionals do not quite fit the range of possible 'answer's. Can you figure out which of your expected 'answer'(s) are not in that range? "
+              "You must change the input of the random function so that all the texts will be displayed. Your conditionals are not all made true by one of the 'answers' your random function generates. Can you figure out what 'answer(s)' you need the random function to generate so that all of the conditionals can be true?"
             ]
           },
           
@@ -230,6 +230,31 @@ var M8B = {
               "I really want you to start using blank lines of code to split your code into more manageable chunks. Try it out and see what you think!"
             ]
           }  
+        }
+      },
+
+      // user interaction
+      {
+        checkBox: {
+          title: "There is user interaction.",
+          help: "",
+          id: "user_interaction"
+        },
+
+        selected: {
+          "no_add-ons":{
+            messages: [
+              " the user interaction"
+            ]
+          }
+        },
+
+        unselected: {
+          "no_add-ons":{
+            messages: [
+              "I would love to see you add in some user interaction. You can use `mouseClicked=function(){};` and `Program.restart();` to restart your program when you click to make a new message. The more you do right now, the better you will become!"
+            ]
+          }
         }
       },
   
