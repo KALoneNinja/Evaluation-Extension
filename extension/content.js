@@ -228,7 +228,7 @@ var critiqueResponse = function(){
       compliments ++;
       complimentsToDo --;
     } else{
-      extraSuggestions += ctqs[i].unselected["no_add-ons"].messages[Math.floor(random(ctqs[i].unselected["no_add-ons"].messages.length))];
+      extraSuggestions += "\n\n" + ctqs[i].unselected["no_add-ons"].messages[Math.floor(random(ctqs[i].unselected["no_add-ons"].messages.length))];
     }
     
   }
@@ -328,8 +328,11 @@ var projects = {
         }
         
         if(qualScore >= 5 || qualScore === NaN){
-          if(extraSuggestions !== "" && compliments !== 0){
+          if(extraSuggestions === "" && compliments !== 0){
             extraCompliments += "\n\n";
+          }
+          if(extraSuggestions !== ""){
+            extraSuggestions += "\n\n";
           }
           finalFeed[finalFeed.length-1].value += extraCompliments + extraSuggestions + "Keep up the hard work! - " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
         } else{
@@ -387,8 +390,11 @@ var projects = {
         }
         
         if(qualScore >= 5 || qualScore === NaN){
-          if(extraSuggestions !== "" && compliments !== 0){
+          if(extraSuggestions === "" && compliments !== 0){
             extraCompliments += "\n\n";
+          }
+          if(extraSuggestions !== ""){
+            extraSuggestions += "\n\n";
           }
           finalFeed[finalFeed.length-1].value += extraCompliments + extraSuggestions + "Keep up the hard work! - " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
         } else{
@@ -446,8 +452,11 @@ var projects = {
         }
         
         if(qualScore >= 5 || qualScore === NaN){
-          if(extraSuggestions !== "" && compliments !== 0){
+          if(extraSuggestions === "" && compliments !== 0){
             extraCompliments += "\n\n";
+          }
+          if(extraSuggestions !== ""){
+            extraSuggestions += "\n\n";
           }
           finalFeed[finalFeed.length-1].value += extraCompliments + extraSuggestions + "Keep up the hard work! - " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
         } else{
@@ -457,6 +466,8 @@ var projects = {
 
           finalFeed[finalFeed.length-1].value += extraCompliments + "Please do not submit a project when it clearly won't pass. It not only wastes both of our time, but it also wastes all other student's time as well. So again, please make sure it will pass before submitting. If you need help, you can find it in the help requests tab beneath your program.\n\n- Don't give up! " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
         }
+          
+
       }
     },
     "Project: Magic 8-Ball": {
@@ -503,8 +514,11 @@ var projects = {
         }
         
         if(qualScore >= 5 || qualScore === NaN){
-          if(extraSuggestions !== "" && compliments !== 0){
+          if(extraSuggestions === "" && compliments !== 0){
             extraCompliments += "\n\n";
+          }
+          if(extraSuggestions !== ""){
+            extraSuggestions += "\n\n";
           }
           finalFeed[finalFeed.length-1].value += extraCompliments + extraSuggestions + "Keep up the hard work! - " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
         } else{
@@ -514,6 +528,8 @@ var projects = {
 
           finalFeed[finalFeed.length-1].value += extraCompliments + "Please do not submit a project when it clearly won't pass. It not only wastes both of our time, but it also wastes all other student's time as well. So again, please make sure it will pass before submitting. If you need help, you can find it in the help requests tab beneath your program.\n\n- Don't give up! " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
         }
+          
+
       }
     },
     "Project: Build-a-House": {
@@ -560,8 +576,11 @@ var projects = {
         }
         
         if(qualScore >= 5 || qualScore === NaN){
-          if(extraSuggestions !== "" && compliments !== 0){
+          if(extraSuggestions === "" && compliments !== 0){
             extraCompliments += "\n\n";
+          }
+          if(extraSuggestions !== ""){
+            extraSuggestions += "\n\n";
           }
           finalFeed[finalFeed.length-1].value += extraCompliments + extraSuggestions + "Keep up the hard work! - " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
         } else{
@@ -571,6 +590,8 @@ var projects = {
 
           finalFeed[finalFeed.length-1].value += extraCompliments + "Please do not submit a project when it clearly won't pass. It not only wastes both of our time, but it also wastes all other student's time as well. So again, please make sure it will pass before submitting. If you need help, you can find it in the help requests tab beneath your program.\n\n- Don't give up! " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
         }
+          
+
       }
     },
     "Project: Make it rain": {
@@ -617,8 +638,11 @@ var projects = {
         }
         
         if(qualScore >= 5 || qualScore === NaN){
-          if(extraSuggestions !== "" && compliments !== 0){
+          if(extraSuggestions === "" && compliments !== 0){
             extraCompliments += "\n\n";
+          }
+          if(extraSuggestions !== ""){
+            extraSuggestions += "\n\n";
           }
           finalFeed[finalFeed.length-1].value += extraCompliments + extraSuggestions + "Keep up the hard work! - " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
         } else{
@@ -628,11 +652,13 @@ var projects = {
 
           finalFeed[finalFeed.length-1].value += extraCompliments + "Please do not submit a project when it clearly won't pass. It not only wastes both of our time, but it also wastes all other student's time as well. So again, please make sure it will pass before submitting. If you need help, you can find it in the help requests tab beneath your program.\n\n- Don't give up! " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
         }
+          
+
       }
     },
     "Project: Bookshelf": {
-        generateFeedback: function(){
-          projectType = $("._1g8isxy8")[0];
+      generateFeedback: function(){
+        projectType = $("._1g8isxy8")[0];
         if(!projectType){
           alert("Error! You must be in the about section.");
           return;
@@ -674,8 +700,11 @@ var projects = {
         }
         
         if(qualScore >= 5 || qualScore === NaN){
-          if(extraSuggestions !== "" && compliments !== 0){
+          if(extraSuggestions === "" && compliments !== 0){
             extraCompliments += "\n\n";
+          }
+          if(extraSuggestions !== ""){
+            extraSuggestions += "\n\n";
           }
           finalFeed[finalFeed.length-1].value += extraCompliments + extraSuggestions + "Keep up the hard work! - " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
         } else{
@@ -685,9 +714,9 @@ var projects = {
 
           finalFeed[finalFeed.length-1].value += extraCompliments + "Please do not submit a project when it clearly won't pass. It not only wastes both of our time, but it also wastes all other student's time as well. So again, please make sure it will pass before submitting. If you need help, you can find it in the help requests tab beneath your program.\n\n- Don't give up! " + evaluationAuthor + " (with help of Feedback Generator Extension[testing][version: 0.5.1])";
         }
-            
+          
 
-    }
+      }
   }
 };
 
